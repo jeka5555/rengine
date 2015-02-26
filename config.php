@@ -1,14 +1,12 @@
 <?php $config = array (
-  'id' => 'rengine',
-  'title' => 'REngine CMF',
-  'key' => 'unaKbla8331G',
+  'id' => 'project-id',
+  'title' => 'project-title',
+  'key' => 'project-key',
   'language' => 'ru',
   'applicationClass' => 'node-web-application',
   'enableSuperAccess' => true,
   'encoding' => 'utf-8',
-  'adminEmail' => 'admin@site.com',
-  'underConstruction' => false,
-  'underConstructionMessage' => 'Welcome to REngine CMF!',
+  'adminEmail' => 'admin-email-here',
   'locale' => 'ru_RU.UTF8',
   'useTrash' => 'true',
 );
