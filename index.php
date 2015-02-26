@@ -8,5 +8,4 @@ setlocale(LC_ALL, 'ru_RU.UTF-8');
 
 define("__DR__", rtrim($_SERVER['DOCUMENT_ROOT'],'/').'/');
 header('Content-type: text/plain;charset=utf-8');
-//die('проходят технические работы. Система будет доступна в течении 30 минут');
 require_once('core/loader.php');
