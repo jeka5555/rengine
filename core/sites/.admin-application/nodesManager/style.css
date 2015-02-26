@@ -1,0 +1,62 @@
+.nodes-manager .content-type-icon { display: inline-block; width: 16px; height: 16px; border-radius: 2px; background-repeat: no-repeat; margin-right:3px;}
+.nodes-manager { vertical-align: top; }
+
+.nodes-manager .search-box-container { text-align: right; display: table; width: 100%; margin-bottom:5px; padding-bottom:5px; border-bottom: 1px solid gray;}
+.nodes-manager .search-box-container > * { vertical-align: middle; display: table-cell; }
+.nodes-manager .search-box-container > .type-selector { text-align: left; }
+
+
+.nodes-manager .nodes-manager-content { display: table; width: 100%; }
+.nodes-manager .nodes-manager-content > * { display: table-cell; vertical-align: top; }
+.nodes-manager .nodes-manager-tree { width: 250px;}
+
+.nodes-manager .flex-button.id-toggle-mode .icon { width: 17px; height: 17px; background-image: url('{%BASE%}icon-mode-tree.png');}
+.nodes-manager .flex-button.id-toggle-mode.active .icon { width: 17px; height: 17px; background-image: url('{%BASE%}icon-mode-list.png');}
+
+.nodes-manager input[name="search"] { min-width: 250px;  background-position: 95% center;  background-repeat: no-repeat; background-image: url("{%BASE%}icon-search.png"); }
+
+.nodes-manager .node-icon { display: inline-block; width: 20px; height: 20px; background-position: center; background-repeat: no-repeat; margin-right: 5px; vertical-align: middle; background-image: url('{%BASE%}node-icon-generic.png');}
+.nodes-manager .node-icon[data-node-type=site] { background-image: url('{%BASE%}node-icon-site.png');}
+.nodes-manager .node-icon[data-node-type=article] { background-image: url('{%BASE%}node-icon-article.png');}
+.nodes-manager .node-icon[data-node-type=collection] { background-image: url('{%BASE%}node-icon-collection.png');}
+
+.nodes-manager .flex-button.id-open-node .icon{ width: 17px; background-image: url("{%BASE%}open-folder.png"); height: 17px; }
+.nodes-manager .flex-button.id-target .icon{ width: 17px; background-image: url("{%BASE%}icon-crosshair.png"); height: 17px; }
+
+.nodes-manager-system-node {
+	display: block;
+	padding: 6px;
+	font-size: 11px;
+	margin: 3px;
+	border-radius: 3px;
+	border: 1px solid white;
+	border-bottom: 4px solid white;
+	box-shadow: 0 0 3px 0 rgba(0,0,0,0.3);
+	background: -webkit-linear-gradient(#FFF, #EEE);
+	background: -moz-linear-gradient(#FFF, #EEE);
+	background: linear-gradient(#FFF, #EEE);
+	margin-bottom: 4px;
+	cursor: pointer;
+}
+
+.nodes-manager-system-node .title {
+	background-image: url('{%BASE%}icon-clockworks.png');
+	background-position: left center;
+	background-repeat: no-repeat;
+	padding-left: 20px;
+}
+
+.nodes-manager .nodes-manager-tree .flex-tree-node.active > .flex-tree-node-heading {
+	color: white;
+	background-image: linear-gradient(#2e85d8, #599fd8);
+	background-image: -webkit-linear-gradient(#2e85d8, #599fd8);
+	background-image: -moz-linear-gradient(#2e85d8, #599fd8);
+}
+
+.nodes-widgets-list .flex-button.id-delete {
+	width: 20px; background-image: url("{%BASE%}icon-delete.png"); height: 20px;
+}
+
+.nodes-widgets-list .flex-button.id-edit {
+	width: 20px; background-image: url("{%BASE%}icon-edit.png"); height: 20px;
+}

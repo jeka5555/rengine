@@ -1,0 +1,328 @@
+/* Блоки форм */
+.form-block { display: block; }
+.form-block > .form-block-title {
+    cursor: pointer;
+    font-weight: bold;
+    text-align: left;
+    padding: 5px 0;
+    display: block;
+    vertical-align: middle;
+    background: -webkit-linear-gradient(#EEE, #F5F5F5);
+    background: -moz-linear-gradient(#EEE, #F5F5F5);
+    background: -o-linear-gradient(#EEE, #F5F5F5);
+    background: linear-gradient(#EEE, #F5F5F5);
+    border-left: 2px solid #2a78c0;
+    border-bottom: 2px solid #DDD;
+    font-size: 12px;
+    padding-left: 10px;
+    text-shadow: 0 0 2px 2px white;
+    color: #555;
+}
+.form-block.closed > .form-block-title { border-left: none; }
+.form-block .form-block-title > * { vertical-align: middle; }
+.form-block .form-block-title .icon{
+	display: inline-block;
+	width:20px;
+	height:20px;
+	background-image: url('{%BASE%}../img/form-block-close.png');
+	background-repeat: no-repeat;
+	background-position: center;
+	margin:0 10px;
+}
+.form-block.closed { opacity: 0.5; }
+.form-block.closed .form-block-content { display: none; }
+.form-block.closed .form-block-title .icon { background-image: url('{%BASE%}../img/form-block-open.png'); }
+
+/* Хинты форм  */
+.core-hint > icon { content: '&#63'; color: black; cursor: pointer; background: #DDDDDD; border-radius: 3px; width: 20px; height: 20px; display: inline-block; }
+.core-hint { max-width: 200px; cursor: pointer; font-size: 11px; font-style: oblique; text-align: left; background: white; padding: 10px; border:1px solid #e7e7e7; box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.4); color: #444; }
+
+/* Ошибки форм */
+
+.core-form-errors,
+.form-input-errors {cursor: pointer; font-size: 11px; font-style: oblique; text-align: left; background: #FFDDDD; padding: 5px; border:1px solid #FFAAAA; box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.4); color: #62040c; opacity: 0.8; }
+
+.core-form-error,
+.form-input-errors-error { margin-bottom: 5px; position: relative;}
+
+.core-form-error:before,
+.form-input-errors-error:before {display: inline; content: '-'; position: relative; top: 0; left: 0; padding-right: 5px;}
+
+/* Общие свойства полей */
+
+.decorated-input-title { margin: 5px 0; color: inherit!important; }
+.decorated-input-title > * { display: block; }
+.adminTools .decorated-input-title.has-hint .title { color: #9C0000; text-decoration: underline; cursor: pointer; }
+.decorated-input-title .id {font-size: 11px; color: #666; font-style: italic; }
+.form-input, .decorated-form-input-body { position: relative; width: auto; }
+
+.decorated-input-description { opacity: 0.8; font-size: 11px; font-style: italic;}
+
+.form-input-heading { font-weight: bold; text-align: center; font-size: 1.1em; background-color: #DDD;}
+
+/* Перетаскивание */
+.form-input-drag { display: block; position: absolute; top: 0; left: -5px; width: 10px; height: 10px; border-radius: 3px; background: #ccc; }
+
+
+.adminTools  input[type=checkbox] {
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
+	background: white;
+	display: inline-block;
+	border-radius: 4px;
+	box-shadow: inset 0 0 3px 0 rgba(0, 0, 0, 0.4);
+	border: 1px solid white;
+	padding: 3px;
+	width: 23px !important;
+	height: 23px !important;
+	background-position: center center;
+	background-repeat: no-repeat;
+	cursor: pointer;
+}
+
+.adminTools input[type=checkbox]:checked {
+	background-image: url('{%BASE%}../img/checkmark.png');
+}
+
+
+.adminTools .core-form {display: block; overflow: hidden; font-size: 12px; text-align: center; }
+.adminTools .core-form .formTitle { background: #EEEEEE; border-radius: 5px; padding: 10px; margin:0; font-size: 1.1em; text-align: center; }
+.adminTools .core-form .form-input {
+    margin: 0;
+}
+
+.adminTools .core-form .decorated-input-title,
+.adminTools .core-form .decorated-input-body {
+	display: table-cell;
+	padding: 4px;
+}
+
+
+.adminTools .core-form .decorated-input-body { width: 100%; }
+.adminTools .core-form .decorated-input-title { width: 150px; min-width: 150px; }
+
+.adminTools .core-form .decorated-input { border-bottom: 1px dashed #CCCCCC;  width: 99%;}
+.adminTools .core-form .decorated-input:last-child { border-bottom: none; }
+
+.adminTools .core-form .form-input .errors { font-size: 0.8em; font-style: oblique; }
+.adminTools .core-form .form-input.hasErrors { background-color: rgba(255,0,0,0.2); }
+.adminTools .core-form .isRequiredMark { color: red;}
+
+.adminTools .core-form .decorated-input-title {
+	border: 2px solid white;
+	border-radius: 4px;
+	font-style: oblique;
+	opacity: 0.7;
+	vertical-align: middle;
+	text-align: right;
+	padding-right: 10px;
+	width: 150px;
+}
+
+.adminTools .core-form .decorated-input-title > * {
+	vertical-align: middle;
+}
+
+.adminTools .form-input-title {display: block;}
+.adminTools .form-input-id {display: block; font-size: 0.9em; opacity:0.8; font-weight: normal; margin-top: 3px;}
+
+.adminTools .decorated-input-body { text-align: left; }
+.adminTools .decorated-input-body > * {vertical-align: middle;}
+
+.adminTools input[type="text"],
+.adminTools input[type="password"],
+.adminTools select,
+.adminTools textarea {
+	background-color: white;
+	color: #333;
+	min-width: 250px;
+}
+
+.adminTools select {
+	appearance: none;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	text-indent: 0.01px;
+	text-overflow: '';
+	background-image: url('{%BASE%}../img/select_button.png');
+	background-repeat: no-repeat;
+	background-position: 98% center;
+	padding-right: 26px;
+}
+
+.adminTools .decorated-input-body input[type="text"]:focus,
+.adminTools .decorated-input-body input[type="password"]:focus,
+.adminTools .decorated-input-body select:focus,
+.adminTools .decorated-input-body textarea:focus {
+	box-shadow:0 0 5px #2e85d8;
+	outline:1px solid #2e85d8;
+}
+
+
+.core-form .form-buttons { text-align: center; }
+.core-form .form-buttons input { margin: 4px; }
+
+
+/* Datetime input */
+.input-type-datetime .time { width: 80px; min-width: 80px; margin-right: 10px; text-align: center; }
+.input-type-datetime .date { width: 80px; min-width: 80px; },
+
+/* Селектор смарт-значения --------------- */
+.smart-input-selector {width: 100%; display: block; padding-right: 10px; vertical-align: top;}
+.smart-input-selector > span {display: inline-block; height: 5px; width: 10px; cursor: pointer; opacity: 0.2; vertical-align: top; border-radius: 3px;}
+
+.smart-input-selector > span.active {width: 20px; opacity: 1;}
+.smart-input-selector .undefined {background-color: gray;}
+.smart-input-selector .value {background-color: #0e70ad;}
+.smart-input-selector .smart {background-color: red;}
+
+/* Текстовое поле ввода */
+.adminTools .core-form .input-type-textarea textarea {width: 99%; min-width: 100px;}
+.adminTools .core-form .input-type-textarea {min-height: 50px;}
+
+/* input[type="number"] -------------------------- */
+.ui-numeric{border: none;}
+.ui-numeric .number { float: left; max-width: 100px!important; }
+.ui-numeric-currency{display:inline-block; padding:0 2px; vertical-align:top}
+.ui-numeric-buttons{display:inline-block; padding-left:2px}
+.ui-numeric-buttons .ui-button{margin:0; width:25px; height:25px; border: 1px solid #D3D3D3; border-radius: 4px; }
+
+
+/* Rules input */
+.input-type-rules > .rules > .rule-item { margin:0px; margin-bottom:3px; border:1px solid #ccc; border-bottom: 4px solid #CCC; overflow: hidden; border-radius: 3px;}
+.input-type-rules > .rules > .rule-item > .rule-title { width:100%;  display: table;  background-color: #eee; font-weight: bold; color: #666;}
+.input-type-rules > .rules > .rule-item > .rule-title > * { display: table-cell; vertical-align: middle; padding: 3px;}
+.input-type-rules > .rules > .rule-item > .rule-title .toolbar {text-align: right;}
+.input-type-rules > .rules > .rule-item > .rule-title .toolbar .flex-button { padding: 1px; }
+
+.list-element > .toolbar { margin: 5px; text-align: right; }
+
+.input-object > .preview .object-preview { display: inline-block; padding: 4px; margin: 4px 0; margin-right: 4px; border-radius: 4px; border: 1px solid #EEEEEE; }
+
+
+.selectBox-form { text-align: left; }
+.selectBox-form .input-selectBox-item { display: inline-block; margin: 10px; text-align: left; vertical-align: middle; }
+.selectBox-form .input-selectBox-item label { padding-left: 10px; }
+.input-selectBox .values { display: inline-block; margin:5px; }
+.input-selectBox-value { font-style: italic; opacity: 0.7; display: inline-block;	margin: 5px; }
+
+
+.form-input-radio .option { margin-right: 10px; }
+.form-input-radio label { margin-left: 10px; }
+
+
+
+
+/* Datetime input */
+.input-type-datetime > input[type="text"] { min-width: 0;  width: 80px; text-align: center;}
+
+/* Поле формы. Media */
+/* -------------------------------- */
+.input-type-media { text-align: center; display: inline-block; }
+.input-type-media .preview { position: relative; display: inline-block;}
+.input-type-media .preview .miniButton { position: absolute; top: 0; right : 0; opacity: 0;}
+.input-type-media .preview:hover .miniButton {opacity: 1;}
+.input-type-media .controls { margin-top: 5px;  vertical-align: top; }
+.input-type-media .controls > * { vertical-align: top; margin: 0 3px;}
+.input-type-media .selectObject { min-height: auto;	padding: 5px; }
+
+.input-type-text input { width: 99%;}
+
+/* Component input */
+.input-type-component .type-selector,
+.input-type-component .id-selector { display: inline-block; }
+.input-type-component .type-selector .form-input,
+.input-type-component .id-selector .form-input { width: 250px; }
+
+/* Record input */
+.input-type-record { border-radius: 4px;}
+.input-type-record .record-element { margin: 4px; padding: 4px; width: 100%; display: table; border-bottom: 1px dotted gray; }
+.input-type-record .record-element:last-child { border-bottom: none; }
+.input-type-record .record-element > * { display: table-cell; vertical-align: middle;}
+.input-type-record .record-element > .element-key { font-size: 11px; width: 150px; text-align: right; padding-right: 10px; opacity: 0.8;}
+.input-type-record .record-element > .element-key > .key { opacity: 0.7;}
+.input-type-record > .preview-widget .record-input-preview { font-size: 11px; color: #666; }
+.input-type-record > .preview-widget .record-input-preview .title {  font-style: normal;}
+.input-type-record > .preview-widget .record-input-preview .value { color:#0e70ad; text-decoration: underline; }
+
+.input-type-record .toolbar .id-toggle-mode .icon { width: 17px; height: 17px; background-image: url('{%BASE%}../img/icon-maximize.png'); }
+.input-type-record .toolbar .id-toggle-mode.active .icon { background-image: url('{%BASE%}../img/icon-minimize.png'); }
+.input-type-record .toolbar .id-edit-in-window .icon { width: 17px; height: 17px; background-image: url('{%BASE%}../img/icon-input-record-edit-in-window.png'); }
+
+/* List input */
+
+/* Список */
+/* -------------------------------- */
+.input-type-list .list-elements { vertical-align: top; display: block;}
+.input-type-list .list-element { display: table; margin: 5px; border: 1px dashed #ccc; border-radius: 3px; vertical-align: top; width: 99%;}
+.input-type-list .list-element > * { display: table-cell;}
+.input-type-list .list-element > .list-element-body { padding: 5px; width: 100%;}
+
+.input-type-list .list-element-controls { text-align: right; vertical-align: middle; padding: 5px;}
+.input-type-list .list-element-controls .delete-element .icon { background-image: url('{%BASE%}../img/icon-remove.png'); width:17px; height: 17px;}
+
+.input-type-list .list-element:hover { border: 1px dashed #777; }
+
+.input-type-list > .list-preview { font-size: 11px; color: #666; margin:10px 0;}
+.input-type-list > .list-preview .list-preview-element .value { color:#0e70ad; text-decoration: underline;  }
+
+.input-type-list .toolbar .flex-button.toggle-mode .icon { width: 17px; height: 17px; background-image: url('{%BASE%}../img/icon-maximize.png'); }
+.input-type-list .toolbar .flex-button.toggle-mode.active .icon { background-image: url('{%BASE%}../img/icon-minimize.png'); }
+.input-type-list .toolbar .flex-button.add-element .icon { width: 17px; height: 17px; background-image: url('{%BASE%}../img/icon-add.png'); }
+
+
+
+.input-type-multiselect .label > * { display: inline-block; vertical-align: middle; }
+
+
+.input-type-advancedSelect .select-box-container {
+	display: table;
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	min-height: 28px;
+	min-width: 20px;
+}
+
+.input-type-advancedSelect .select-box-container > * {
+	display: table-cell;
+	vertical-align: middle;
+	padding: 2px;
+	position: relative;
+}
+
+.input-type-advancedSelect .select-box-container > .value {
+	min-width: 100px;
+}
+
+.input-type-advancedSelect .select-box-container > .select-button {
+	background-image: url('{%BASE%}../img/select_button.png');
+	background-repeat: no-repeat;
+	width: 25px;
+	height: 25px;
+	cursor: pointer;
+}
+
+.input-type-advancedSelect > .values-container {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	min-height: 50px;
+	min-width: 50px;
+	position: absolute;
+	top: 100%;
+	background: white;
+}
+
+.input-type-advancedSelect .advancedSelect-value {
+	cursor: pointer;
+	border-radius: 2px;
+	padding: 5px;
+	margin: 3px;
+	border-bottom: 1px solid #bbbbbb;
+
+}
+
+.input-type-advancedSelect .advancedSelect-value:hover {
+	background-color: #eee;
+}
+

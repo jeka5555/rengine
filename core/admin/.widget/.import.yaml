@@ -1,0 +1,4 @@
+﻿---
+skip:
+  - adminToolbar.js
+  - adminToolbar.css

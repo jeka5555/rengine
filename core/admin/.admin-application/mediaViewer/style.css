@@ -1,0 +1,3 @@
+.media-viewer-content { text-align: center; }
+.media-viewer .info { font-size: 11px; max-width: 500px; text-align: center; margin-top: 10px; padding: 10px; border-top: 1px dashed gray; }
+.media-viewer .info-item { display: inline-block; margin-right: 20px;}

@@ -1,0 +1,5 @@
+---
+import:
+  - .class/media.php
+  - .component/media-type.php
+  - .media-type/simple.php

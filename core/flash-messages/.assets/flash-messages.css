@@ -1,0 +1,34 @@
+.flash-messages {
+	background-color: rgba(0, 0, 0, 0.5);
+	padding: 15px;
+	overflow: hidden;
+}
+
+.flash-messages .flash-message {
+	display: block;
+	font-size: 14px;
+	color: rgba(0, 0, 0, 0.8);
+	text-shadow: 2px 1px 0 white;
+	margin-bottom: 5px;
+	padding-bottom: 5px;
+	background: rgba(255, 255, 255, 1);
+	padding: 10px;
+	border-radius: 3px;
+	border-bottom: 3px solid white;
+	box-shadow: 1px 1px 5px 0 rgba(0, 0, 0, 0.2);
+
+}
+
+.flash-messages .flash-message > * {
+	vertical-align: middle;
+}
+
+.flash-messages .flash-message .close-button {
+	cursor: pointer;
+	width: 20px;
+	height: 20px;
+	background-image: url('{%BASE%}img/icon-remove.png');
+	background-repeat: no-repeat;
+	background-position: center;
+	top: 10px;
+}

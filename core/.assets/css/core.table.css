@@ -1,0 +1,44 @@
+.core-table { display: table; overflow: hidden; border-collapse: collapse; width: 100%;}
+
+
+	.core-table-heading,
+	.core-table-row { display: table-row; width: 100%; }
+		.core-table-row > div,
+		.core-table-heading > div {  border: 1px solid #EEEEEE; display: table-cell; padding: 4px;  vertical-align: middle;}
+
+		.core-table-row > div { text-align: left; padding-left:10px; }
+		.core-table-heading > div { text-align: left; padding-left:10px;}
+
+	.core-table-row:nth-child(odd) { background-color: rgba(0, 0, 0, 0.05); }
+	.core-table-row.active { background-color: rgba(0, 0, 255, 0.2);}
+
+	.core-table-row.selected:nth-child(odd),
+	.core-table-row.selected { background-color: #134e86; color: white; }
+
+	.core-table-heading {
+		background: -webkit-linear-gradient(#DDD 0%, #DDD 50%, #EEE 60%, #EEE 100%);
+		background: -moz-linear-gradient(#DDD 0%, #DDD 50%, #EEE 60%, #EEE 100%);
+		background: -o-linear-gradient(#DDD 0%, #DDD 50%, #EEE 60%, #EEE 100%);
+		background: linear-gradient(#DDD 0%, #DDD 50%, #EEE 60%, #EEE 100%);
+		font-size: 12px;
+		text-align: center;
+	}
+		.core-table-heading > div { padding-top: 10px; padding-bottom: 10px;  border-bottom:2px solid transparent; font-size: 12px; cursor: default;}
+
+/* Sortable cells */
+.core-table-heading > div.sortable:hover { background: -webkit-linear-gradient(#CCC, #CCC, #DDD);  }
+.core-table-heading > div.sortable { cursor: pointer; }
+.core-table-heading > div.sortable.sorted-down a,
+.core-table-heading > div.sortable.sorted-up a { color: white; }
+.core-table-heading > div.sortable.sorted-down {
+	background-image:  linear-gradient(#2e85d8, #599fd8);
+	background-image: -webkit-linear-gradient(#2e85d8, #599fd8);
+	background-image: -moz-linear-gradient(#2e85d8, #599fd8);
+	background-image: -o-linear-gradient(#2e85d8, #599fd8);
+	color: white;
+ }
+.core-table-heading > div.sortable.sorted-up { background: #ffa800;}
+.core-table-heading > div.sortable > .title { text-decoration: underline; }
+
+.core-table-heading .title { display: inline-block; }
+.core-table.selectable .core-table-row:hover {	background: #EEEEEE; cursor: pointer; }

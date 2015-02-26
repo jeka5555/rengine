@@ -1,0 +1,614 @@
+html { height: 100%; }
+body { font-family: Arial, Helvetica, sans-serif; font-size: 12px;}
+
+* { outline-color: transparent; }
+
+
+
+/* Рабочий стол */
+.admin-desktop { position: fixed; top: 0; bottom: 0; left: 0; right: 0; pointer-events:none; z-index: 1000;}
+.admin-desktop * {
+	pointer-events: all;
+	-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+	-moz-box-sizing: border-box;    /* Firefox, other Gecko */
+	box-sizing: border-box;         /* Opera/IE 8+ */
+}
+
+
+/* Основное элементы  */
+.adminTools .ui-dialog {
+    border-radius: 3px;
+    border:2px solid white;
+    box-shadow: 0 0 10px 0px rgba(0, 0, 0, 0.2);
+}
+
+.adminTools { color: black; font-family: Arial, Helvetica, sans-serif; font-size: 12px; text-align: left; color: #222; box-sizing: border-box; }
+.adminTools strong { font-weight: bold; }
+.adminTools h1, .adminTools h2, .adminTools h3, .adminTools h4 { font-size: 12px;font-family: Arial, Helvetica, sans-serif; color: #444;}
+
+.adminTools .ui-dialog-content { background: white; padding: 2px; }
+
+/* Консоль разработчика --------------- */
+.adminTools.console { font-size: 12px; position: fixed; right: 10px; bottom: 10px; width: 500px; height: 20px; text-align: left;
+	box-shadow: 0 0 0 1px #CCCCCC, 0 0 0 5px white,	0 0 20px 0px black; z-index: 100; background: white; overflow: hidden; }
+	.adminTools.console h3.consoleHeader { color: black; cursor: pointer; background: #DDDDDD; margin: 0; padding: 4px;}
+	.adminTools.console .body { position: absolute;	top: 24px; bottom: 0; right: 0; left: 0; padding: 10px; overflow: auto; }
+
+/* Элементы для оформления админки */
+/* ----------------------------------- */
+.miniButton {
+	cursor: pointer;
+	display: inline-block;
+	margin:2px; margin: 2px;
+	background: #ededed;
+    vertical-align: middle;
+	border-radius: 4px;
+	background-image: -webkit-linear-gradient(#EEE, #EEE, #DDD, #DDD);
+	background-image: -moz-linear-gradient(#EEE, #EEE, #DDD, #DDD);
+	background-image: -o-linear-gradient(#EEE, #EEE, #DDD, #DDD);
+	background-image: -linear-gradient(#EEE, #EEE, #DDD, #DDD);
+	border: 1px solid white;
+	box-shadow: 0 0 3px 0 rgba(0,0,0,0.3);
+}
+
+.miniButton:hover {
+	background-image: -webkit-linear-gradient(#DDD, #DDD, #EEE, #EEE);
+	background-image: -moz-linear-gradient(#DDD, #DDD, #EEE, #EEE);
+	background-image: -o-linear-gradient(#DDD, #DDD, #EEE, #EEE);
+	background-image: -linear-gradient(#DDD, #DDD, #EEE, #EEE);
+	border: 1px solid #599fd8;
+	box-shadow: 0 0 3px 0 rgba(0,0,0,0.3);
+}
+
+.miniButton .icon { background-position: center center; background-repeat: no-repeat; display: inline-block; width: 16px; height: 16px;}
+
+.miniButton.add .icon { background-image:url('{%BASE%}../img/miniButton/add.png');}
+.miniButton.edit .icon { background-image:url('{%BASE%}../img/miniButton/edit.png');}
+.miniButton.delete .icon { background-image:url('{%BASE%}../img/miniButton/delete.png');}
+.miniButton.rename .icon { background-image:url('{%BASE%}../img/miniButton/rename.png');}
+.miniButton.up .icon { background-image:url('{%BASE%}../img/miniButton/up.png');}
+.miniButton.down .icon { background-image:url('{%BASE%}../img/miniButton/down.png');}
+
+.dragObject {
+	padding:4px;
+	margin: 2px;
+	border: 1px solid #AAAAAA;
+	box-shadow: 0 0 3px 0 rgba(0,0,0,0.1);
+	display: inline-block;
+	max-width: 300px;
+	max-height: 300px;
+	overflow: hidden;
+	border-radius: 4px;
+	background-image: -webkit-linear-gradient(#EEEEEE, #FAFAFA);
+	background-image: -moz-linear-gradient(#EEEEEE, #FAFAFA);
+	background-image: linear-gradient(#EEEEEE, #FAFAFA);
+}
+
+/* ----------------------------------- */
+.adminTools input[type=text],
+.adminTools input[type=number],
+.adminTools input[type=password],
+.adminTools textarea,
+.adminTools select {
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
+	background: white;
+	display: inline-block;
+	border-radius: 4px;
+	box-shadow: inset 0 0 3px 0 rgba(0, 0, 0, 0.4);
+	border: 1px solid white;
+	padding: 3px;
+	line-height: 23px;
+	min-height: 23px;
+}
+
+
+.adminTools * input[type=button],
+.adminTools * input[type=submit] {
+	cursor: pointer;
+	display: inline-block;
+	background: #ededed;
+	padding: 0 10px;
+	border-radius: 4px;
+	background-image: -webkit-linear-gradient(#EEE, #EEE, #DDD, #DDD);
+	background-image: -moz-linear-gradient(#EEE, #EEE, #DDD, #DDD);
+	background-image: -o-linear-gradient(#EEE, #EEE, #DDD, #DDD);
+	background-image: -linear-gradient(#EEE, #EEE, #DDD, #DDD);
+	color: black;
+	min-height: 28px;
+	border: 1px solid white;
+	box-shadow: 0 0 3px 0 rgba(0,0,0,0.3);
+}
+
+
+.adminTools input[type=button]:hover,
+.adminTools input[type=submit]:hover {
+	min-height: 28px;
+	background-image: -webkit-linear-gradient(#DDD, #DDD, #EEE, #EEE);
+	background-image: -moz-linear-gradient(#DDD, #DDD, #EEE, #EEE);
+	background-image: -o-linear-gradient(#DDD, #DDD, #EEE, #EEE);
+	background-image: -linear-gradient(#DDD, #DDD, #EEE, #EEE);
+	border: 1px solid #599fd8;
+	box-shadow: 0 0 3px 0 rgba(0,0,0,0.3);
+}
+
+/* Файловый загрузчик */
+/* ---------------------------- */
+.fileUploader { display: inline-block; text-align: center; }
+	.fileUploader-header { cursor: pointer; padding: 2px; position: relative; overflow:hidden; text-align: center; }
+	.fileUploader .progressBar { width: 100%; display: block; border-radius: 3px; background: white; border: 1px solid #aaaaaa; margin: 0; padding: 1px 1px; margin-top: 3px; height: 5px; }
+	.fileUploader .mediaList { font-size: 11px; background: rgba(0, 0, 0, 0.05); margin-top: 5px; border-radius: 4px; padding: 5px; }
+	.fileUploader .mediaList span { display: inline-block; }
+	.fileUploader .mediaList .loadedMedia { height: 50px; margin-bottom: 5px; vertical-align: middle; }
+	.fileUploader .mediaList .loadedMedia > span { vertical-align: middle; }
+	.fileUploader .mediaList .title { width: 100px; }
+	.fileUploader .progress .bar { display: block; background: #155BB0; background-image: -webkit-linear-gradient(#155BB0, #4A81C2); background-image: -moz-linear-gradient(#155BB0, #4A81C2); background-image: linear-gradient(#155BB0, #4A81C2); height: 5px; }
+	.fileUploader .progress .value { font-size: 11px; }
+	.fileUploader input[type=file] { display: none; }
+	.fileUploader .header input[type=file] { color: transparent; opacity: 0; position: absolute; top: 0; left: 0; bottom: 0; right: 0; }
+	.fileUploader .progress { margin-top: 5px; text-align: center; }
+	.fileUploader .file-uploader-button .helper {
+        display: inline-block;
+        width: 32px; height: 32px;
+		background-image:url('{%BASE%}../img/icons/upload.png')!important;
+		background-position: 50%!important;
+		background-repeat: no-repeat!important;
+	}
+
+
+/* Страница ошибки */
+/* ------------------------------------ */
+body.template.error {
+	height: 100%;
+	width: 100%;
+	background:#eee;
+	background-repeat: no-repeat;
+	background-position: center 25px;
+	background-size: auto, cover;
+	text-align: center;
+}
+
+body.template.error .error-frame {
+	margin: 0 auto;
+	position: relative;
+	top: 50%;
+	margin-top: -100px;
+	text-align:center;
+	background: white;
+	background: rgba(255, 255, 255, 0.6);
+	max-width: 80%;
+	padding: 40px;
+	vertical-align: middle;
+	box-shadow: 0 0 7px 0 rgba(0, 0, 0, 0.1);
+	overlfow: hidden;
+}
+
+body.template.error .error-code {
+	font-size: 4em;
+	color: #888;
+	margin-bottom: 15px;
+}
+
+
+.adminTools .panelHeading {
+	display: block;
+	padding: 3px;
+	background: #EEEEEE;
+	background-image: -webkit-linear-gradient(#C4C4C4, #E8E8E8);
+	background-image: linear-gradient(#C4C4C4, #E8E8E8);
+	background-image: -moz-linear-gradient(#C4C4C4, #E8E8E8);
+	margin: 1px;
+	text-align: center;
+	border-radius: 4px;
+}
+
+.adminTools .paginator {
+	font-size: 12px;
+	margin-top: 5px;
+}
+
+.adminTools .adminPanel {
+	border-radius: 4px;
+	border: 1px solid #EEEEEE;
+	padding: 3px;
+	margin: 3px;
+	font-size: 12px;
+}
+
+
+.adminTools .adminPanelHeading {
+	border-radius: 4px;
+	background: #EEEEEE;
+	background-image: -webkit-linear-gradient(#EEEEEE, #FAFAFA);
+	background-image: -moz-linear-gradient(#EEEEEE, #FAFAFA);
+	background-image: -o-linear-gradient(#EEEEEE, #FAFAFA);
+	padding: 3px;
+	margin-bottom: 4px;
+	text-align: center;
+}
+
+.adminTools .adminPanelContent {
+}
+
+
+.errorFrame input[type=button]:hover {
+	opacity: 1 !important;
+}
+
+
+/* Editor elements */
+.page-element-widget:hover { outline: 2px solid rgba(255, 0, 0, 0.3); min-height: 20px; }
+.page-element-widget.page-element-active:hover { outline: 2px solid rgba(255, 0, 0, 1); }
+.page-element-block {
+	padding: 5px 0;
+    outline: 2px solid rgba(0, 150, 0, 0.3);
+}
+.page-element-block.page-element-active {
+	box-shadow:
+		0 0 0 1px white,
+		0 0 0 2px rgba(0, 150, 0, 1);
+}
+.page-element-object:hover, .page-element-resource:hover { outline: 2px solid rgba(0, 140, 255, 0.3);}
+.page-element-object.page-element-active:hover, .page-element-resource.page-element-active:hover { outline: 2px solid rgba(0, 140, 255, 1); }
+
+
+.flex-panel {
+	-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+	-moz-box-sizing: border-box;    /* Firefox, other Gecko */
+	box-sizing: border-box;         /* Opera/IE 8+ */
+	padding: 2px; margin: 2px; border-radius: 4px; border: 1px solid #EEEEEE;
+}
+
+.structure-parent {
+	margin-bottom: 20px;
+}
+.structure-children > * {
+	display: inline-block;
+	vertical-align: top;
+	width: 40%;
+}
+
+
+.adminTools.flex-window .flex-window-icon { background-size: cover; width: 24px; height: 24px; display: inline-block; vertical-align: middle; margin-right: 8px; }
+
+/* Кнопка интерфейса */
+.flex-button {
+  display: inline-block;
+  vertical-align: middle;
+ 	border-radius: 3px!important;
+ 	background: white;
+ 	color: #515151!important;
+	background-image: -moz-linear-gradient(top, rgb(255,255,255), rgb(235,235,235));
+ 	background-image: -webkit-linear-gradient(top, rgb(255,255,255), rgb(235,235,235));
+ 	background-image: linear-gradient(top, rgb(255,255,255), rgb(235,235,235));
+ 	background-repeat: no-repeat !important;
+ 	background-position: 50% 50% !important;
+ 	box-shadow: 0 0 5px rgba(0, 0, 0, 0.2)!important;
+  border: 1px solid white!important;
+  cursor: pointer!important;
+ 	padding: 5px!important;  
+ 	height: auto!important;
+ 	line-height: auto!important; 
+}
+
+.flex-button .title {
+ line-height: inherit !important;
+}
+
+.flex-button .icon {
+	display: inline-block;
+	background-position: center;
+	background-repeat: no-repeat;   
+	height: auto;
+	width: auto; 
+}
+
+.flex-button .title {
+	margin-left: 5px;
+}
+
+.flex-button:hover {
+	background-image: -moz-linear-gradient(top, rgb(235,235,235), rgb(255,255,255));
+    background-image: -webkit-linear-gradient(top, rgb(235,235,235), rgb(255,255,255));
+ 	background-image: linear-gradient(top, rgb(235,235,235), rgb(255,255,255));
+}
+
+.flex-button.disabled {
+	opacity: 0.5;
+	cursor: default;
+}
+
+.flex-button.active {
+	color: white;
+	background-image: -webkit-linear-gradient(#2e85d8, #599fd8);
+	background-image: -moz-linear-gradient(#2e85d8, #599fd8);
+	background-image: -o-linear-gradient(#2e85d8, #599fd8);
+}
+
+
+.flex-button > * {
+    display: inline-block!important;
+    vertical-align: middle!important;
+}
+
+
+/* Страничная навигация */
+.flex-paginator { margin: 10px;}
+	.flex-paginator input {padding:3px !importan; border-radius: 4px; width: 25px; color:#999 !important; text-align: center;}
+	.flex-paginator-page { margin-right: 4px; padding: 4px 7px; border-radius: 4px; text-align: center; display: inline-block;}
+		.flex-paginator-page:hover { cursor: pointer; margin-right: 4px; background: #EEEEEE; box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.3); }
+		.flex-paginator-page.active {
+			background-image: -webkit-linear-gradient(#2e85d8, #599fd8);
+			background-image: -moz-linear-gradient(#2e85d8, #599fd8);
+			background-image: -o-linear-gradient(#2e85d8, #599fd8);
+			color: white;
+		}
+
+	.flex-paginator-title { font-size: 11px; margin-right: 10px; }
+
+
+/* Тулбар для окна */
+.flex-window-toolbar {
+    width: 100%;
+	text-align: left;
+	vertical-align: middle;
+	background: -webkit-linear-gradient(#FFF, #EEE);
+	background: -moz-linear-gradient(#FFF, #EEE);
+	background: -o-linear-gradient(#FFF, #EEE);
+	background: linear-gradient(#FFF, #EEE);
+	border-bottom: 1px solid #CCC;
+	font-size: 12px;
+    overflow: hidden;
+    white-space: nowrap;
+}
+	.flex-window-toolbar > .flex-button {
+
+		padding:10px 10px;
+        border-right: 1px solid #CCC;
+        display: inline-block;
+        vertical-align: middle;
+        cursor: pointer;
+        white-space: nowrap;
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: moz-none;
+        -ms-user-select: none;
+        user-select: none;
+	}
+
+
+
+/* Табы */
+.ui-tabs-heading {display: table; }
+	.ui-tabs-button {display: table-cell; padding: 5px; cursor: pointer; }
+	.ui-tabs-content {padding: 10px; }
+
+.flex-tab {
+    margin-bottom: 3px;
+    padding: 2px;
+    border: 1px solid #CCC;
+    border-radius: 3px;
+}
+    .flex-tab-content { overflow: hidden; }
+	.flex-tab-heading {
+		font-size: 14px;
+		vertical-align: middle;
+		border-radius: 3px;
+		background: #EEEEEE;
+		background-image: -webkit-linear-gradient(#EEEEEE, #FAFAFA);
+		background-image: -moz-linear-gradient(#EEEEEE, #FAFAFA);
+		background-image: -o-linear-gradient(#EEEEEE, #FAFAFA);
+		padding: 5px 3px;
+		margin-bottom: 4px;
+		padding-left: 10px; color: #555555;
+        border-bottom: 1px solid #EEEEEE;
+		cursor: pointer;
+	}
+
+	.flex-tab-heading .controls { float: right; overflow: hidden; }
+	.flex-tab-heading .close { float: right; overflow: hidden; }
+	.flex-tab.closed { opacity: 0.5; }
+	.flex-tab.closed .flex-tab-content { display: none; }
+
+/* Тулбары */
+
+.flex-toolbar { display: inline-block; vertical-align: middle; }
+.flex-mini-toolbar { display: inline-block; }
+
+	.flex-toolbar > * { margin : 1px; vertical-align: middle;}
+	.flex-toolbar .span { background: rgba(0, 0, 0, 0.4); width: 1px; height: 16px; display: inline-block; margin: 0 8px; }
+
+
+
+.flex-button {
+	background-position: center;
+	background-repeat: no-repeat;
+}
+
+.flex-button.selected {
+	background-image: -webkit-linear-gradient(#2e85d8, #599fd8);
+	background-image: -moz-linear-gradient(#2e85d8, #599fd8);
+	background-image: -o-linear-gradient(#2e85d8, #599fd8);
+	color: white;
+}
+
+/* Контекстное меню ---------------------- */
+.flex-context-menu {
+	display: block;
+	border-radius: 3px;
+	background-color: white;
+	box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.7), 0 0 0 1px white;
+	min-width : 20px; min-height : 20px;
+	z-index : 5000;
+	padding: 4px;
+	font-size: 13px;
+	color: #444;
+	width: auto;
+
+}
+	.flex-context-menu .splitter { border-bottom: 1px dotted #444444;}
+
+	.flex-context-menu-element {
+			border-radius: 2px;
+			margin: 3px;
+			display: block;
+			width: auto;
+			white-space:nowrap;
+			overflow: hidden;
+			vertical-align: middle;
+			padding:5px 10px;
+			color: #444;
+		}
+
+		.flex-context-menu-group > .title {
+				background-image: linear-gradient(rgba(0, 0, 0, 0.2),  rgba(0, 0, 0, 0.1));
+				background-image: -webkit-linear-gradient(rgba(0, 0, 0, 0.1),  rgba(0, 0, 0, 0.2));
+				color: black;
+				padding: 6px 10px;
+				margin:3px;
+		}
+		.flex-context-menu-element > .children { display: none;	position : absolute; left: 40px; background-color: white; top: 20px; }
+		.flex-context-menu-element.has-children { background: url('{%BASE%}../img/icons/arrow.right.png'); background-repeat: no-repeat; background-position: right center; }
+		.flex-context-menu-element.active {
+			background-color: #134e86;
+			color: white;
+		}
+			.flex-context-menu-element.active > .children {	display: block; }
+			.flex-context-menu-element.active > .title { color: white; }
+
+.flex-dialog { text-align: center; }
+
+
+/* Страничная навигация */
+.flex-paginator .page { cursor: pointer; margin: 2px; padding: 4px; border-radius: 3px; background: #EEEEEE; display: inline-block; }
+	.flex-paginator .page:hover { background: #AAAAAA; }
+
+
+
+.galleryWrapper {
+    background: none repeat scroll 0 0 white;
+    border-radius: 3px 3px 3px 3px;
+    box-shadow: 0 0 9px #444444;
+    padding: 10px;
+}
+
+
+.flex-panel-title {
+	display: block;
+	border-top: 3px solid #444444;
+	padding: 12px 6px;
+	font-weight: bold;
+	background: linear-gradient(#DDD, #EEE);
+	margin-bottom: 4px;
+}
+
+
+.flex-tabsPanel {width: 100%;}
+.flex-tabsPanel-header {
+	display: block;
+	border-bottom: 1px solid #ccc;
+	background: linear-gradient(rgba(255, 255, 255, 0) 0%, rgba(255,255,255, 0) 70%, #eee 100%);
+}
+
+.flex-tabsPanel-content > .flex-tab > .flex-tab-heading {display: none;}
+.flex-tabsPanel-tab-heading {
+	position: relative;
+	top: 1px;
+	display: inline-block;
+	padding: 7px;
+	border-right: 1px solid #ccc;
+	border-bottom: 3px solid #ccc;
+	cursor: pointer;
+	font-size: 12px;
+	vertical-align: middle;
+	border-top-left-radius: 2px;
+	border-top-right-radius: 2px;
+	background: #EEEEEE;
+	background: -webkit-linear-gradient(#EEE 0%, #EEE 50%, #EEE 60%, #FFF 100%);
+	background: -moz-linear-gradient(#EEE 0%, #EEE 50%, #EEE 60%, #FFF 100%);
+	background: -o-linear-gradient(#EEE 0%, #EEE 50%, #EEE 60%, #FFF 100%);
+	background: linear-gradient(#EEE 0%, #EEE 50%, #EEE 60%, #FFF 100%);
+	margin-top: 4px;
+	padding-left: 10px; color: #555555;
+	cursor: pointer;
+	margin-right:2px;
+}
+
+.flex-tabsPanel-tab-heading:hover {
+	border-bottom: 3px solid #134e86;
+}
+
+.flex-tabsPanel-tab-heading.active {
+	opacity: 1;
+	border-bottom: 3px solid transparent;
+	color: white;
+	background: #134e86;
+}
+
+.flex-mobileTree-node {
+	display: inline-block;
+	padding: 4px;
+	font-size: 12px;
+	border-radius: 3px;
+	border: 1px solid white;
+	border-bottom: 4px solid white;
+	box-shadow: 0 0 3px 0 rgba(0,0,0,0.3);
+	margin-right: 10px;
+	background: -webkit-linear-gradient(#FFF, #EEE);
+	background: -moz-linear-gradient(#FFF, #EEE);
+	background: linear-gradient(#FFF, #EEE);
+	margin: 4px;
+	cursor: pointer;
+}
+
+.flex-mobileTree-node:hover {
+	background: -webkit-linear-gradient(#EEE, #FFF);
+	background: -moz-linear-gradient(#EEE, #FFF);
+	background: linear-gradient(#EEE, #FFF);
+}
+
+.flex-mobileTree-path {
+	display: block;
+	border-bottom: 1px dashed #ccc;
+	padding-bottom:5px;
+	margin-bottom: 5px;
+	font-size:11px;
+}
+
+.flex-mobileTree-path-elementDiv {
+	display: inline-block;
+	margin:3px;
+	color: #AAA;
+}
+
+.flex-mobileTree-path-element {
+	border: 1px solid white;
+	padding: 4px;
+	box-sizing: border-box;
+	display: inline-block;
+	border-radius: 3px;
+	cursor: pointer;
+}
+
+.flex-mobileTree-path-element:not(.disabled):hover {
+	box-shadow: 0 0 3px 0 rgba(0,0,0,0.3);
+	background: -webkit-linear-gradient(#EEE, #FFF);
+	background: -moz-linear-gradient(#EEE, #FFF);
+	background: linear-gradient(#EEE, #FFF);
+}
+
+.flex-mobileTree-path-element.disabled { 	cursor: auto; opacity: 0.4; }
+
+.core-framed-element {
+	border: 1px solid #DDD;
+	border-bottom: 3px solid #EEE;
+	margin-bottom: 3px;
+	border-radius: 3px;
+	background-image: linear-gradient(rgba(0,0,0, 0), rgba(0,0,0,0.05));
+}
+
+
+
+.mce-i-insertmedia { background: url('{%BASE%}../js/tinymce/plugins/insertmedia/img/icon-media.png') 50% 50% no-repeat !important; background-size: cover !important; }

@@ -1,0 +1,8 @@
+.popup-buttons {
+	text-align: center;
+	padding: 10px;
+}
+
+.popup-buttons > *  {
+	margin: 10px;
+}

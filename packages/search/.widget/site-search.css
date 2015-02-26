@@ -1,0 +1,14 @@
+.widget-site-search .icon {
+	cursor: pointer;
+}
+
+
+.widget-site-search-result {
+	margin-bottom: 20px;
+	padding-bottom: 20px;
+	border-bottom: 1px dashed #CCC;
+}
+
+.widget-site-search-result h4 {
+	margin-bottom: 10px;
+}

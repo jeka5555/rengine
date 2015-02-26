@@ -1,0 +1,7 @@
+---
+id: repository
+title: Диспетчер пакетов
+description: Модуль позволяет управлять скаченными пакетами и устанавливать новые из репозитория
+icon: /packages/repository/icon.png
+deps:
+  - {id: core, version: 5}

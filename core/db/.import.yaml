@@ -1,0 +1,9 @@
+---
+import:
+  - .class/simple-class.php
+  - .class/accessable-class.php
+  - .class/storable-class.php
+  - .class/safe-class.php
+  - .class/editable-class.php
+  - .class/searchable-class.php
+  - .class/actionable-class.php

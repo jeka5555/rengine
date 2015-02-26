@@ -1,0 +1,30 @@
+/* Дерево */
+.flex-tree {}
+.flex-tree-node { margin: 3px 0; display: block; }
+
+.flex-tree-node-heading {
+	display: block;
+	cursor: pointer;
+	padding: 10px 3px;
+	padding-left: 10px;
+	margin-bottom: 3px;
+	font-size: 12px;
+	border-radius: 3px;
+	border: 1px solid white;
+	border-bottom: 4px solid white;
+	box-shadow: 0 0 3px 0 rgba(0,0,0,0.3);
+	background: -webkit-linear-gradient(#FFF, #EEE);
+	background: -moz-linear-gradient(#FFF, #EEE);
+	background: linear-gradient(#FFF, #EEE);
+	cursor: pointer;
+}
+
+
+.flex-tree-node-heading:hover {text-decoration: underline;  border-radius: 3px; }
+.flex-tree-node.selected > .flex-tree-node-heading { background: #9b0000; color: white; }
+.flex-tree-node.closed > .flex-tree-node-children { margin-left: 10px; }
+.flex-tree-node.flex-tree-node-has-children > .flex-tree-node-heading > .flex-tree-node-close-icon { background-image: url('{%BASE%}../img/tree/opened.gif'); }
+.flex-tree-node.closed.flex-tree-node-has-children > .flex-tree-node-heading > .flex-tree-node-close-icon { background-image: url('{%BASE%}../img/tree/closed.gif'); }
+.flex-tree-node-text { border-radius:3px; padding: 2px;}
+.flex-tree-node-children-container { padding-left: 10px; border-left: 1px dashed gray;}
+
