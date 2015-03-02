@@ -33,8 +33,6 @@ class StaticContent extends \Node {
 	// -----------------
 	public function executeNode() {
 
-        parent::executeNode();
-
 		// Get content block
 		// -----------------
 		$settings = \Core::getModule('content')->getComponentSettings();
