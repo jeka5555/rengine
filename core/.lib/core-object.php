@@ -74,4 +74,41 @@ class CoreObject {
 		return $this;
 	}
 
+	// Get property
+	// ------------
+	public function getProperty($prop = null)
+	{
+
+		// Return via getter method
+		// ------------------------
+		$getterMethod = 'get' . $prop;
+		if (method_exists($this, $getterMethod)) {
+			return call_user_func(array($this, $getterMethod));
+		}
+
+		// Or from properties
+		// ------------------
+		return @ $this->properties[$prop];
+
+	}
+
+	// Setter
+	// ------
+	public function set($args = array(), $value = null)
+	{
+
+		// Property
+		// --------
+		if (!is_array($args)) $this->__set($args, $value);
+
+		// Array property
+		// --------------
+		else {
+			foreach ($args as $variable => $value) $this->__set($variable, $value);
+		}
+		return $this;
+
+	}
+
+
 }

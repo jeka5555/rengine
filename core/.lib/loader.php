@@ -54,33 +54,33 @@ class Loader {
 	
 		// Читаем файл
 		// -----------	
-		$importFile = __DR__.$path.'/.import.yaml';
+		$importFile = __DR__ . $path . '/.import.xml';
 		if (file_exists($importFile)) {
 
-			$data = yaml_parse_file($importFile);
+			$data = simplexml_load_file($importFile);
 
-			// Работа со списком пропуска
-			// --------------------------
-			if (!empty($data['skip'])) {
-				foreach($data['skip'] as $object) {
+			// Skip list
+			// ---------
+			if (!empty($data->skip)) {
+				foreach ($data->skip->children() as $object) {
 					static::$skipList[] = $path.'/'.$object;
 				}
 			}
 
-			// Импорирование объектов
-			// -----------------------
-			if (!empty($data['import'])) {
-				foreach($data['import'] as $object) {
+			// Import files
+			// ------------
+			if (!empty($data->import)) {
+				foreach ($data->import->children() as $object) {
 
-					// Пребразование в строки
-					// ----------------------
-					if (is_string($object)) {
-						$fullPath = $path.'/'.$object;
-						if (is_file($fullPath)) $object = array('as' => 'file', 'path' => $fullPath);
-						else if (is_dir($fullPath)) $object = array('as' => 'directory', 'path' => $fullPath);
-					}
-                    else if (!empty($object['path'])) {
-						$object['path'] = $path.'/'.$object['path'];
+					// Get by type
+					// -----------
+					switch ($object->getName()) {
+						case "file":
+							$object = array('as' => 'file', 'path' => $path . '/' . (string)$object);
+							break;
+						case "directory":
+							$object = array('as' => 'directory', 'path' => $path . '/' . (string)$object);
+							break;
 					}
 
 					self::importObject($object);
@@ -95,31 +95,31 @@ class Loader {
 	// -----------------
 	private static function importFilePHP($file) {
 
-		// Вычисляем путь до компонента
-		// ----------------------------
+		// Get component path
+		// ------------------
 		$componentPath = substr(dirname($file), strlen(__DR__));
 		array_push(\Loader::$componentPath, $componentPath);
 		array_push(\Loader::$componentFiles, $file);
 
-		// Включение файла
-		// ---------------
+		// Include file
+		// ------------
 		include_once($file);
 
-		// Регистрируем новые классы
-		// -------------------------
+		// Register classes
+		// ----------------
 		$updatedClasses = get_declared_classes();
 		$updatedClassesCount = count($updatedClasses);
-		
+
+		// Itterate over all files
+		// -----------------------
 		for($position = static::$classesCount ; $position < $updatedClassesCount; $position ++ ) {
 	
-			// Если класс  - компонент, подключаем
-			// -----------------------------------
 			$className = $updatedClasses[$position];
 
-			// Если включенный класс - компонент, подключаем
-			// ---------------------------------------------
+			// If this is component - add
+			// --------------------------
 			if (is_subclass_of($className, '\Component') ) {
-				\Extension::addComponent($className);
+				\Components::addComponent($className);
 			}
 		}
 
@@ -149,8 +149,8 @@ class Loader {
 		// Если директория, включаем как директорию
 		// ----------------------------------------
 		if (!empty($data['path'])) {
-    		    if (is_dir(__DR__.$data['path'])) self::importDirectory($data);
-    		    else if (is_file(__DR__.$data['path'])) self::importFile($data);
+			if (is_dir(__DR__ . $data['path'])) self::importDirectory($data);
+			else if (is_file(__DR__ . $data['path'])) self::importFile($data);
 		}
 		
 	}
@@ -169,8 +169,8 @@ class Loader {
 		$file = __DR__.$data['path'];
 		if (!file_exists($file)) return;
 
-		// Пропуск незагружаемых объектов
-		// ------------------------------
+		// Skip objects
+		// ------------
 		if(in_array($file, self::$skipList)) return;
 
 		// Skip files with tilde
@@ -315,7 +315,8 @@ class Loader {
 		// Import main file
 		// ----------------
 		$mainPackageFile = $path.'/package.php';
-  	    if (file_exists(__DR__.$mainPackageFile)) {
+
+		if (file_exists(__DR__ . $mainPackageFile)) {
 			self::importObject(array('as' => 'file', 'path' => $mainPackageFile));
 		}
 	
