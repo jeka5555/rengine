@@ -53,7 +53,7 @@ class SettingsManager extends \Core\Admin\Components\AdminApplication {
 
 		// Get component
 		// -------------
-		$component = @ \Extension::$ext[$args['type']][$args['id']]['class'];
+		$component = @ \Components::$types[$args['type']][$args['id']];
 		if (empty($component)) return false;
 
 		// Return component data
@@ -85,7 +85,7 @@ class SettingsManager extends \Core\Admin\Components\AdminApplication {
 
 			// Read extensions of this type
 			// ----------------------------
-			$extensions = @ \Extension::$ext[$type];
+			$extensions = @ \Components::$types[$type];
 			if (empty($extensions)) continue;
 
 			// Add extensions with settings

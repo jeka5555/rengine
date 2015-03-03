@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<loaderOptions>
+	<skip>
+		<file>adminToolbar.js</file>
+		<file>adminToolbar.css</file>
+	</skip>
+</loaderOptions>

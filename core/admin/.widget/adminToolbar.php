@@ -43,21 +43,19 @@ class AdminToolbar extends \Widget {
 	// ----------------------------------
 	private function addApplicationButton($application) {
 
-		$applicationClass = $application['class'];
-
 		// Подготовка опций
 		// ----------------
 		$options = array(
-			'id' => @ $application['id'],
-			'title' => @ $application['title'],
-			'iconClass' => @ $application['iconClass'],
-			'icon' => @ $application['icon'],
-			'appID' => $application['id'],
+			'id' => @ $application::$component['id'],
+			'title' => @ $application::$component['title'],
+			'iconClass' => @ $application::$component['iconClass'],
+			'icon' => @ $application::$component['icon'],
+			'appID' => $application::$component['id'],
 		);
 
 		// Если есть команда для запуска
 		// -----------------------------
-		if ($command = call_user_func(array($applicationClass, 'getExecuteCommand'))) {
+		if ($command = call_user_func(array($application, 'getExecuteCommand'))) {
 			$options['command'] = $command;
 		}
 
@@ -72,7 +70,7 @@ class AdminToolbar extends \Widget {
 	private function findApplications() {
 
 		$appsList = array();
-		$applications = & \Extension::$ext['admin-application'];
+		$applications = &\Components::$types['admin-application'];
 
 
 		// Каждое приложение проверяем на возможность вызова
@@ -80,13 +78,9 @@ class AdminToolbar extends \Widget {
 		if (!empty($applications))
 		foreach($applications as $application) {
 
-    	$application = $application['class']::$component;
-
-			// Проверка возможности вставить кнопку и проверка доступа
-			// --------------------------------------------------------
-			if (@$application['addOnToolbar'] != true) continue;
-			if (!empty($application['access'])) {
-				if(!\Rules::check($application['access'])) continue;
+			if (@$application::$component['addOnToolbar'] != true) continue;
+			if (!empty($application::$component['access'])) {
+				if (!\Rules::check($application::$component['access'])) continue;
 			}
 
 			// Если

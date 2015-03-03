@@ -38,6 +38,7 @@ class Admin extends \Module {
 	// Init component
 	// --------------
 	public static function initComponent() {
+
 		// Auto add admin widget
 		// ---------------------
 		if (!empty(\Core::getModule('users')->user)) {

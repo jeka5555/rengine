@@ -1,7 +1,0 @@
-﻿---
-import:
-  - mediaManager.js
-  - mediaManager.Folder.js
-  - mediaManager.Media.js
-  - mediaManager.Tab.js
-  - mediaManager.ServicePopup.js
