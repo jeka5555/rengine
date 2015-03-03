@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<core.Package>
+	<id>repository</id>
+	<title>Диспетчер пакетов</title>
+	<description>Модуль позволяет управлять скаченными пакетами и устанавливать новые из репозитория</description>
+	<icon>icon.png</icon>
+</core.Package>

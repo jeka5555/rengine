@@ -19,3 +19,23 @@ class ComponentSettings extends \ObjectClass {
 	);
 
 }
+
+class Node extends \ObjectClass
+{
+
+	// Component
+	// ---------
+	public static $component = array(
+		'id' => 'node',
+		'title' => 'Нода'
+	);
+
+	// Class properties
+	// ----------------
+	public static $classProperties = array(
+		'type' => array('title' => 'Тип компонента', 'type' => 'text', 'listing' => true, 'sortable' => true),
+		'id' => array('title' => 'ID компонента', 'type' => 'text', 'listing' => true, 'sortable' => true),
+		'source' => array('title' => 'Исходный код', 'type' => 'text'),
+	);
+
+}

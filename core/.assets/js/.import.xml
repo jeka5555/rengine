@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<loaderOptions>
+	<import>
+		<file>jquery/jquery.js</file>
+		<file>jquery/jquery-ui.js</file>
+		<file>jquery/jquery.migrate.min.js</file>
+		<file>jquery/jquery.cookie.js</file>
+		<file>jquery/jquery.rightClick.js</file>
+		<file>jquery/jquery.resize.js</file>
+		<file>jquery/jquery.dialogextend.1_0_1.js</file>
+		<file>jquery/jquery.ui.datepicker-ru.js</file>
+		<file>spin.min.js</file>
+		<file>jquery.spin.js</file>
+		<file>core.js</file>
+		<file>events.js</file>
+		<file>core.component.js</file>
+		<file>flex.js</file>
+		<file>flex.apiTable.js</file>
+		<file>flex.tree.js</file>
+		<file>flex.window.js</file>
+		<file>ui.js</file>
+		<file>api.js</file>
+		<file>lightbox/lightbox.js</file>
+		<file>lightbox/css/lightbox.css</file>
+		<directory>core.editor</directory>
+		<directory>mCustomScrollbar</directory>
+	</import>
+</loaderOptions>

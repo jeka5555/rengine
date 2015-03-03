@@ -71,7 +71,7 @@ class Compiler extends \Module {
 
 		// Cached file name
 		// ----------------
-		$compiledFile = __DR__.'compiled/compiled-'.$nameHash.'.css';
+		$compiledFile = __DR__ . 'private/cache/css/compiled-' . $nameHash . '.css';
 
 		// Modification time
 		// -----------------
@@ -84,7 +84,7 @@ class Compiler extends \Module {
 			// Recache
 			// -------
 			if (filemtime($compiledFile) >= $newestFileTime) {
-				\Loader::$files['css'] = array('/compiled/compiled-'.$nameHash.'.css');
+				\Loader::$files['css'] = array('/private/cache/css/compiled-' . $nameHash . '.css');
 				return;
 			}
 
@@ -165,7 +165,7 @@ class Compiler extends \Module {
 
 		// Cached file name
 		// ----------------
-		$compiledFile = __DR__.'compiled/compiled-'.$nameHash.'.js';
+		$compiledFile = __DR__ . 'private/cache/js/compiled-' . $nameHash . '.js';
 
 		// Modification time
 		// -----------------
@@ -178,7 +178,7 @@ class Compiler extends \Module {
 			// Recache
 			// -------
 			if (filemtime($compiledFile) >= $newestFileTime) {
-				\Loader::$files['js'] = array('/compiled/compiled-'.$nameHash.'.js');
+				\Loader::$files['js'] = array('/private/cache/js/compiled-' . $nameHash . '.js');
 				return;
 			}
 
@@ -209,7 +209,7 @@ class Compiler extends \Module {
 
 			// Replace js with compiled one
 			// ----------------------------
-			\Loader::$files['js'] = array('/compiled/compiled-'.$nameHash.'.js');
+			\Loader::$files['js'] = array('/private/cache/css/compiled-' . $nameHash . '.js');
 		}
 
 	}

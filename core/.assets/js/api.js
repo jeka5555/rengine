@@ -136,7 +136,7 @@ API.request = function(args) {
         url : uri,
         async : safeAssign(args.async, true),
         headers : {
-            'REQUEST_MODE' : "API"
+	        'Request-Mode': "API"
         },
         type : 'POST',
         data : requestData,

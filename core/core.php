@@ -44,7 +44,6 @@ class Core extends \Module {
 
 				// Run application with events
 				// ---------------------------
-
 				$this->application->runApplication();
 
 			}
@@ -61,6 +60,17 @@ class Core extends \Module {
 	// -------------
 	public static function initComponent() {
 
+		// Session
+		// -------
+		session_set_cookie_params(0);
+
+		// Set encoding
+		// ------------
+		mb_internal_encoding(static::$settings['encoding']);
+		setlocale(LC_TIME, static::$settings['locale']);
+
+		// If core is initialized, break
+		// -----------------------------
 		if (@static::$component['initialized'] == true ) return;
 
 		// Init component
@@ -68,24 +78,32 @@ class Core extends \Module {
 		parent::initComponent();
 		$component = \Core::getModule('core');
 
-		// Read settings and merge
-		// -----------------------
-        require_once(__DR__.'config.php');
-		static::$settings = array_merge(static::$settings, $config);
+		// Check for config
+		// ----------------
+		$configFile = __DR__ . 'private/config/config.xml';
 
-		// Session
-		// -------
-		session_set_cookie_params(0);
+		// If config file exists
+		// ---------------------
+		if (file_exists($configFile)) {
 
-		// Main settings
-		// -------------
-		define('__SITE_KEY__', @ $config['key']);
-		define('__SITE_ID__', @ $config['id']);
+			// Load file and parse
+			// -------------------
+			$config = simplexml_load_file($configFile);
+			$config = json_decode(json_encode($config), true);
 
-		// Set encoding
-		// ------------
-		mb_internal_encoding(static::$settings['encoding']);
-		setlocale(LC_TIME, static::$settings['locale']);
+			if (!empty($config['enableSuperAccess'])) $config['enableSuperAccess'] = filter_var($config['enableSuperAccess'], FILTER_VALIDATE_BOOLEAN);
+			static::$settings = array_merge(static::$settings, $config);
+
+			// Main settings
+			// -------------
+			define('__SITE_KEY__', @ $config['siteKey']);
+			define('__SITE_ID__', @ $config['siteID']);
+
+			// Set property to install
+			// -----------------------
+			$component->properties['isInstalled'] = true;
+		}
+
 	}
 
 	// Запуск ядра
@@ -107,7 +125,7 @@ class Core extends \Module {
 		}
 		// Init components
 		// ---------------
-		\Extension::initComponents();
+		\Components::initComponents();
 		\Events::send('componentsInitialized');
 
 		// Push messages to client
@@ -127,7 +145,6 @@ class Core extends \Module {
 			$messagesModule->add(array('pinned' => true,'type' => 'notification','text' => $messageText	));
 		}
 
-
 		// Compile resources
 		// -----------------
 		\Core::getModule('compiler')->compile();
@@ -135,9 +152,7 @@ class Core extends \Module {
 		// Refresh
 		// -------
 		\Events::send('coreStart');
-
 		$this->refresh();
-
 		\Events::send('coreStop');
 
 	}
@@ -153,7 +168,15 @@ class Core extends \Module {
 	// Get component by type and ID
 	// ----------------------------
 	public static function getComponent($type = null, $id = null) {
-	  if (!empty($id)) return @ \Extension::$ext[$type][$id]['class'];
+
+		// Get component by type
+		// ---------------------
+		if (!empty($id)) {
+			return @ \Components::$types[$type][$id];
+		}
+
+		// Or just get type
+		// ----------------
 		else return @ constant($type);
 	}
 
@@ -169,7 +192,7 @@ class Core extends \Module {
 	// ---------
 	public static function getClass($id = null) {
 		if (empty($id)) return null;
-		return @\Extension::$ext['class'][$id]['class'];
+		return @ \Components::$types['class'][$id];
 	}
 
 	// Get core instance

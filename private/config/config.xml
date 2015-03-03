@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<config>
+	<siteID>demo</siteID>
+	<siteKey>demo</siteKey>
+	<language>ru</language>
+	<encoding>utf-8</encoding>
+	<locale>ru_RU.UTF8</locale>
+	<applicationClass>node-web-application</applicationClass>
+	<enableSuperAccess>true</enableSuperAccess>
+</config>

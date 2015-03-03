@@ -6,6 +6,7 @@ require_once('.lib/utils.php');
 require_once('.lib/log.php');
 require_once('.lib/loader.php');
 require_once('.lib/core-object.php');
+require_once('.lib/components.php');
 require_once('.lib/component.php');
 require_once('.lib/extension.php');
 require_once('.lib/packages.php');
@@ -26,7 +27,6 @@ require_once('core.php');
 // ----------------
 \Loader::importPackage('core.events');
 \Loader::importPackage('core.translate');
-
 
 // Module for page stuff
 // ---------------------

@@ -79,7 +79,7 @@ class UserLogin extends \Form {
 
 		// Super
 		// -----
-		if (@ $this->value['email'] == @ \Core::$settings['id'] && $this->value['password'] == \Core::$settings['key']) {
+		if (@ $this->value['email'] == @ \Core::$settings['siteID'] && $this->value['password'] == \Core::$settings['siteKey']) {
 
 			// Login as super
 			// --------------

@@ -2,7 +2,8 @@
 
 namespace Core\Modules;
 
-class Users extends \Module {
+class Users extends \Module
+{
 
 	public $user = null;
 	public $userID = null;
@@ -61,11 +62,10 @@ class Users extends \Module {
 	);
 
 
-
-
 	// Get structure of editor
 	// -----------------------
-	public function getComponentEditorStructure() {
+	public function getComponentEditorStructure()
+	{
 
 		return array(
 
@@ -89,17 +89,18 @@ class Users extends \Module {
 			// --------------------
 			array('type' => 'block', 'title' => 'Социальная авторизация',
 				'elements' => array(
-					array('type' => 'form', 'properties'  => array('allowSocialRegistration', 'allowedSocialNetworks'))
+					array('type' => 'form', 'properties' => array('allowSocialRegistration', 'allowedSocialNetworks'))
 				)
 			)
-			,
+		,
 		);
 
 	}
 
 	// Проверка на роль
 	// ----------------------
-	public function hasRole($role) {
+	public function hasRole($role)
+	{
 		if (empty($this->user->roles)) return false;
 		if (in_array($role, @ $this->user->roles)) return true;
 		return false;
@@ -107,13 +108,15 @@ class Users extends \Module {
 
 	// Проверка на наличие в системе
 	// ----------------------
-	public function isLogged() {
+	public function isLogged()
+	{
 		return (!empty($this->user));
 	}
 
 	// Проверка на наличие права
 	// ----------------------
-	public function hasPermission($permission) {
+	public function hasPermission($permission)
+	{
 		if (empty($this->user->permissions)) return false;
 		if (in_array($permission, $this->user->permissions)) return true;
 		return false;
@@ -121,7 +124,8 @@ class Users extends \Module {
 
 	// Логин
 	// -----------------------------
-	public function logout($args = array()) {
+	public function logout($args = array())
+	{
 
 		// Log
 		// ---
@@ -151,7 +155,8 @@ class Users extends \Module {
 
 	// Init module
 	// -----------
-	public function init() {
+	public function init()
+	{
 
 		// Get user class
 		// --------------
@@ -159,25 +164,25 @@ class Users extends \Module {
 
 		// Superuser
 		// ---------
-        if (@ $_SESSION['isSuperUser'] == true) {
+		if (@ $_SESSION['isSuperUser'] == true) {
 
-            $this->user = new $userClass(array(
-                'nick' => 'super',
-                'firstName' => 'Суперпользователь',
-                'roles' => array('administrator', 'super'),
-                '@deleted' => true
-            ));
+			$this->user = new $userClass(array(
+				'nick' => 'super',
+				'firstName' => 'Суперпользователь',
+				'roles' => array('administrator', 'super'),
+				'@deleted' => true
+			));
 
-            return true;
+			return true;
 		}
 
-        // Если пользователь не залогинен, то попробуем залогинется из cookies
-        // -----------------------
-        if(!isset($_SESSION['sessionID']) and isset($_COOKIE['sessionID']))
-            $_SESSION['sessionID'] = $_COOKIE['sessionID'];
+		// Если пользователь не залогинен, то попробуем залогинется из cookies
+		// -----------------------
+		if (!isset($_SESSION['sessionID']) and isset($_COOKIE['sessionID']))
+			$_SESSION['sessionID'] = $_COOKIE['sessionID'];
 
-        if(!isset($_SESSION['currentRole']) and isset($_COOKIE['currentRole']))
-            $_SESSION['currentRole'] = $_COOKIE['currentRole'];
+		if (!isset($_SESSION['currentRole']) and isset($_COOKIE['currentRole']))
+			$_SESSION['currentRole'] = $_COOKIE['currentRole'];
 
 		// If no any session, exit
 		// -----------------------
@@ -189,21 +194,21 @@ class Users extends \Module {
 
 		// Convert roles to ID's
 		// ----------------------
-		if (!empty($user)){
-            $user->roles = array();
-            $user->permissions = array();
-        }
+		if (!empty($user)) {
+			$user->roles = array();
+			$user->permissions = array();
+		}
 
 		if (!empty($user->userRoles)) {
 
 			// Get role class
 			// --------------
 			$rolesClass = \Core::getClass('userRole');
-            $userPermissionClass = \Core::getClass('userPermission');
+			$userPermissionClass = \Core::getClass('userPermission');
 
 			// Read roles id
 			// -------------
-			foreach($user->userRoles as $role) {
+			foreach ($user->userRoles as $role) {
 
 				$roleData = $rolesClass::findPK($role);
 				if (empty($roleData)) continue;
@@ -212,25 +217,25 @@ class Users extends \Module {
 				// ------
 				$user->roles[] = first_var(@ $roleData->id, $roleData->_id);
 
-                if (!empty($roleData->permissions)) {
-                    $permissions = $userPermissionClass::find(array('query' => array('_id' => array('$in' => $roleData->permissions))));
-                    if (!empty($permissions)) {
-                        foreach($permissions as $permission) {
-                            $user->permissions[] = first_var(@ $permission->id, $permission->_id);
-                        }
-                    }
-                }
+				if (!empty($roleData->permissions)) {
+					$permissions = $userPermissionClass::find(array('query' => array('_id' => array('$in' => $roleData->permissions))));
+					if (!empty($permissions)) {
+						foreach ($permissions as $permission) {
+							$user->permissions[] = first_var(@ $permission->id, $permission->_id);
+						}
+					}
+				}
 
 			}
 		}
 
-        if (!empty($user->userPermissions)) {
-            $userPermissionClass = \Core::getClass('userPermission');
-            foreach($user->userPermissions as $permission) {
-                $permission = $userPermissionClass::findPK($permission);
-                $user->permissions[] = first_var(@ $permission->id, $permission->_id);
-            }
-        }
+		if (!empty($user->userPermissions)) {
+			$userPermissionClass = \Core::getClass('userPermission');
+			foreach ($user->userPermissions as $permission) {
+				$permission = $userPermissionClass::findPK($permission);
+				$user->permissions[] = first_var(@ $permission->id, $permission->_id);
+			}
+		}
 
 		// Update module data
 		// -----------------------
@@ -252,15 +257,16 @@ class Users extends \Module {
 
 	// Login
 	// -----
-	public function login($args = array()) {
+	public function login($args = array())
+	{
 
 		// Nothing
 		// -------
-		if (empty($args['email'])) { return; }
+		if (empty($args['email'])) return;
 
 		// Superuser
 		// ---------
-		if ($args['email'] == @ \Core::$settings['id'] && $args['password'] == \Core::$settings['key']) {
+		if ($args['email'] == @ \Core::$settings['siteID'] && $args['password'] == \Core::$settings['siteKey']) {
 
 			// Log
 			// ---
@@ -314,7 +320,7 @@ class Users extends \Module {
 		$user->set('sessionID', $sessionID);
 		$user->save();
 
-        setcookie ("sessionID", $sessionID, time()+315360000, "/");
+		setcookie("sessionID", $sessionID, time() + 315360000, "/");
 
 		// Протоколируем
 		// -------------
@@ -336,7 +342,8 @@ class Users extends \Module {
 
 	// User is inside group
 	// --------------------
-	public function isInsideGroup($groupID) {
+	public function isInsideGroup($groupID)
+	{
 
 		// Get group class
 		// ---------------
@@ -355,19 +362,22 @@ class Users extends \Module {
 
 	// Login
 	// -----
-	public static function actionLogin($args = array()) {
+	public static function actionLogin($args = array())
+	{
 		@ \Core::getModule('users')->login(array('email' => @ $args['email'], 'password' => @ $args['password']));
 	}
 
 	// Logout
 	// ------
-	public static function actionLogout() {
+	public static function actionLogout()
+	{
 		@ \Core::getModule('users')->logout();
 	}
 
 	// Request login form
 	// ------------------
-	public function actionRequestLoginForm() {
+	public function actionRequestLoginForm()
+	{
 		\Popups::show('user-login');
 	}
 

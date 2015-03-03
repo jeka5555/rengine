@@ -35,26 +35,11 @@ class Request extends \Component {
 
 		// If function is embedded
 		// -----------------------
-		if (function_exists('getallheaders')) {
-			$headers = getallheaders();
+		if (function_exists('apache_request_headers')) {
+			$headers = apache_request_headers();
+			return $headers;
 		}
 
-		// Of just emulate it
-		// -------------------
-		$headers = array();
-
-		foreach ($_SERVER as $name => $value) {
-			if (substr($name, 0, 5) == 'HTTP_') {
-				$name = str_replace(' ', '-', str_replace('_', ' ', substr($name, 5)));
-				$headers[$name] = $value;
-			}
-			else if ($name == "CONTENT_TYPE") $headers["Content-Type"] = $value;
-			else if ($name == "CONTENT_LENGTH") $headers["Content-Length"] = $value;
-		}
-
-		// Return headers
-		// --------------
-		return $headers;
 	}
 
 }

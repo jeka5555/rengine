@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<loaderOptions>
+	<import>
+		<file>.class/simple-class.php</file>
+		<file>.class/accessable-class.php</file>
+		<file>.class/storable-class.php</file>
+		<file>.class/safe-class.php</file>
+		<file>.class/editable-class.php</file>
+		<file>.class/searchable-class.php</file>
+		<file>.class/actionable-class.php</file>
+	</import>
+</loaderOptions>

@@ -21,7 +21,7 @@ class Media extends \Module {
 		// ------------
 		'maxImageWidth' => array('type' => 'number', 'title' => 'Максимальная ширина изображения'),
 		'maxImageHeight' => array('type' => 'number', 'title' => 'Максимальная высота изображения'),
-        'fileUploadAccess' => array('type' => 'rules', 'title' => 'Правила доступа'),
+		'fileUploadAccess' => array('type' => 'rules', 'title' => 'Правила доступа'),
 		'maxUploadedFileSize' => array('type' => 'number', 'title' => 'Максимальная размер загружаемого файла'),
 		'maxSpace' => array('type' => 'number', 'title' => 'Лимит дискового пространства'),
 		'cropUploadedImages' => array('type' => 'boolean', 'title' => 'Обрезка изображений при загрузке'),
@@ -47,8 +47,8 @@ class Media extends \Module {
 
 		// Direcories
 		// ----------
-		'tempDirectory' => 'media/temp',
-		'mediaDirectory' => 'media'
+		'tempDirectory' => 'private/media/temp',
+		'mediaDirectory' => 'private/media'
 	);
 
 	// Get structure of editor
@@ -382,5 +382,3 @@ class Media extends \Module {
 	}
 
 }
-
-

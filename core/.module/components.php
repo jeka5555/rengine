@@ -16,45 +16,42 @@ class Components extends \Module {
 
 		$result = array();
 
-		$types = & \Component::$componentTypes;
+		$types = &\Components::$types;
 		foreach ($types as $typeID => $componentType) {
-
+			if ($typeID == 'all') continue;
 
 			// Get extenisons list
 			// -------------------
-			$extensionsList = @ \Extension::$ext[$typeID];
+			$componentsList = @ \Components::$types[$typeID];
 
-			if (!empty($extensionsList))
-			foreach ($extensionsList as $extensionID => $extension) {
+			if (!empty($componentsList))
+				foreach ($componentsList as $componentID => $component) {
 
-				// Get extension class
-				// -------------------
-				$extensionClass = @ $extension['class'];
-				if (empty($extensionClass)) continue;
+					if (empty($component)) continue;
 
 				// Skip non-component classes
 				// --------------------------
-				if (!is_subclass_of($extensionClass, 'Component')) continue;
+					if (!is_subclass_of($component, 'Component')) continue;
 
 				// Skip not configurable components
 				// --------------------------------
-				if (@ $extensionClass::$component['hasSettings'] != true) continue;
+					if (@ $component::$component['hasSettings'] != true) continue;
 
 				// Append component
 				// ----------------
-				$result[$typeID]['components'][$extensionID] = array(
-					'id' => $extensionID,
-					'title' => first_var(@ $extensionClass::$component['title'], $extensionID),
-					'description' => @ $extensionClass::$component['description']
+					$result[$typeID]['components'][$componentID] = array(
+						'id' => $componentID,
+						'title' => first_var(@ $component::$component['title'], $componentID),
+						'description' => @ $component::$component['description']
 				);
 			}
-
 
 			// Add component type info
 			// -----------------------
 			if (!empty($result[$typeID])) {
-				$result[$typeID]['title'] = first_var( @$componentType::$component['title'], $typeID);
-				$result[$typeID]['description'] = @ $componentType::$component['description'];
+				$typeComponent = \Core::getComponent('component', $typeID);
+				$result[$typeID]['title'] = first_var(@$typeComponent::$component['title'], $typeID);
+				$result[$typeID]['description'] = @ $typeComponent::$component['description'];
 			}
 		}
 
@@ -93,11 +90,8 @@ class Components extends \Module {
 		// ------------------------------        
 		$settings = $settingsClass::findOne(array('query' => array('id' => $args['id'], 'type' => $args['type'])));
 
-		if (empty($settings)) {
-			$settings = $settingsClass::getInstance($args);
-		} else {
-			$settings->set($args);
-		}
+		if (empty($settings)) $settings = $settingsClass::getInstance($args);
+		else $settings->set($args);
 
 		// Save settings object
 		// --------------------
@@ -165,13 +159,15 @@ class Components extends \Module {
 
 		$components = array();
 
-		// Get component class
-		// -------------------
-		$component = \Core::getComponent('component', $type);
-		if (empty($component)) return;
+		foreach (\Components::$types['type'] as $component) {
+			$components[] = array(
+				'title' => @ $component::$component['title'],
+				'id' => @ $component::$component['id'],
+				'description' => @ $component::$component['description'],
+				'type' => @ $component::$component['type']
+			);
+		}
 
-
-		$components = call_user_func(array($component, 'getComponentsList'));
 		//asort($components, SORT_STRING);
 
 		// Return

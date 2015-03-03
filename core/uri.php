@@ -106,6 +106,7 @@ class URI extends \Module {
 		// -----------------------
 		if (function_exists('getallheaders')) {
 			$headers = getallheaders();
+			return $headers;
 		}
 
 		// Of just emulate it

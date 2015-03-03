@@ -143,7 +143,7 @@ class Log extends \Module {
 		// -------------
 		if (@$typeData['enabled'] !== false && !empty($typeData['fileName'])) {
 
-			$fileName = __DR__.'logs/'.$typeData['fileName'];
+			$fileName = __DR__ . 'private/logs/' . $typeData['fileName'];
 
 			// File name by rotation frequency
 			// -------------------
@@ -159,7 +159,7 @@ class Log extends \Module {
 
 			// Format and write
 			// ----------------
-			$line = yaml_emit($rows, YAML_UTF8_ENCODING, YAML_ANY_BREAK);
+			$line = json_encode($rows);
 			file_put_contents($fileName, $line, FILE_APPEND);
 		}
 	}

@@ -20,5 +20,6 @@ class Rule extends \Component {
 		'operation' => array('type' => 'ruleOperation', 'title' => 'Операция')
 	);
 
+	public $invert = false;
 
 }

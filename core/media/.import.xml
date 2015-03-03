@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<loaderOptions>
+	<import>
+		<file>.class/media.php</file>
+		<file>.component/media-type.php</file>
+		<file>.media-type/simple.php</file>
+	</import>
+</loaderOptions>

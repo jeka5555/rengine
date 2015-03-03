@@ -24,7 +24,6 @@ class PackageManager extends \Core\Admin\Components\AdminApplication {
 		parent::initComponent();
 	}
 
-
 	// Init manager with data
 	// ----------------------
 	public function commandInit($args = array()) {
@@ -34,6 +33,7 @@ class PackageManager extends \Core\Admin\Components\AdminApplication {
 		// Get download modules
 		// -------------------------
 		if (is_dir($this->packagesDir)) {
+
 			$modulesFolder = scandir($this->packagesDir);
 			foreach($modulesFolder as $packageID) {
 			
@@ -100,7 +100,7 @@ class PackageManager extends \Core\Admin\Components\AdminApplication {
 	// ----------------------
 	public function commandEnablePackage($package = array()) {
 
-  	$packageClass = $this->getPackageClassName(@$package['id']);
+		$packageClass = $this->getPackageClassName(@ $package['id']);
 		if ($packageClass == false) return 'Неизвестный клаcс пакета';
 		$result = $packageClass::enablePackage();
 
@@ -123,7 +123,7 @@ class PackageManager extends \Core\Admin\Components\AdminApplication {
 	// ----------------------
 	public function commandInitPackage($package = array()) {
 
-  	$packageClass = $this->getPackageClassName(@$package['id']);
+		$packageClass = $this->getPackageClassName(@ $package['id']);
 		if ($packageClass == false) return 'Неизвестный клаcс пакета';
 		$result = $packageClass::installPackage();
 

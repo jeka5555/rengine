@@ -66,7 +66,7 @@ class WebApplication extends \Core\Sites\Components\Application {
         // Create request
         // --------------
         $this->request = $requestClass::getInstance(array(
-            'isAJAX' => (@ $headers['REQUEST-MODE'] == 'API'),
+	        'isAJAX' => (@ $headers['Request-Mode'] == 'API'),
             'uri' => $currentURI
         ));
 
@@ -217,6 +217,7 @@ class WebApplication extends \Core\Sites\Components\Application {
 	// -------------
 	public function route($request = null) {
 
+
 		// API hooks?
 		// ----------
 		if (@ $request->path[0] == 'module') {
@@ -341,7 +342,7 @@ class WebApplication extends \Core\Sites\Components\Application {
 		// Die with result
 		// ---------------
 		echo(json_encode($output));
-        die();
+		die();
 	}
 
 	// Process module request

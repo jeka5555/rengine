@@ -49,24 +49,25 @@ class Package extends \Component {
 	// On uninstall
 	// ------------
 	public static function uninstallPackage() {
-	
-		// get package component
-		// ------------
+
+		// Get package component
+		// ---------------------
 		$packageComponent = \Core::getComponent('package', static::$component['id']); 
 		if (!empty($packageComponent))
-			$packageComponent::disablePackage();  
-		
-		// delete object
-		// ------------
+			$packageComponent::disablePackage();
+
+		// Delete object
+		// -------------
 		$packageClass = \Core::getClass('package');
 		$package = $packageClass::findOne(array('query' => array('id' => static::$component['id'])));
 		if (!empty($package))
 			$package->delete();
-			
-		// delete package dir
-		// -----------
-		if (is_dir(__DR__.'packages/'.static::$component['id']))
+
+		// Delete package dir
+		// ------------------
+		if (is_dir(__DR__ . 'packages/' . static::$component['id'])) {
 			self::rrmdir(__DR__.'packages/'.static::$component['id']);
+		}
 	
 		return true;
 	}

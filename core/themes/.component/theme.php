@@ -7,7 +7,7 @@ class Theme extends \Component {
 	public static $component = array(
 		'type' => 'component',
 		'id' => 'theme',
-		'title' => 'Тема оформления',
+		'title' => 'User interface theme',
 		'autoload' => true
 	);
 
@@ -28,20 +28,12 @@ class Theme extends \Component {
 
 	}
 
-	// Register all theme components
-	// -----------------------------
-	public static function registerComponent() {
-		parent::registerComponent();
-	}
-
-	// Get list of all theme templates
-	// -------------------------------
-	public function getTemplatesList() {
-	}
-
-	// Get list of all theme widgts
-	// ----------------------------
-	public function getWidgetsList() {
-
-	}
+	// Theme properties
+	// ----------------
+	public $title = '';
+	public $id = '';
+	public $author = '';
+	public $version = 1.0;
+	public $description = '';
+	public $options = array();
 }

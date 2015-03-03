@@ -1,0 +1,9 @@
+RewriteEngine On
+RewriteBase /
+
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^(.*)$ index.php [L,QSA]
+
+php_flag session.auto_start 1
+php_flag apc.cache_by_default Off

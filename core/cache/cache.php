@@ -9,7 +9,6 @@ class Cache extends \Module {
 		'title' => 'Кэш'
 	);
 
-
 	// Make cache key
 	// --------------
 	public function makeKey($options = null) {
@@ -18,7 +17,6 @@ class Cache extends \Module {
 
 		// Create unique key
 		// -----------------
-
 		if (@ $options['uri'] == true) $opt['uri'] = $_SERVER['REQUEST_URI'];
 		if (@ $options['user'] == true) $opt['user'] = @ \Core::getModule('users')->user->_id;
 

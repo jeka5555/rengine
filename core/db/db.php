@@ -1,15 +1,10 @@
 <?php
 
-ini_set('mongo.native_long', 1);
 ini_set('mongo.native_int',1);
 
-// Основной класс обеспечивающий соединение с базой данных
-// -------------------------------------------------------
 class DB extends \Module {
 
-	// Свойства
-	// --------
-	public static $driver; // Основное подключение
+	public static $driver;
 	public static $connection;
 
 	// Component
@@ -19,7 +14,6 @@ class DB extends \Module {
 		'title' => 'Базы данных',
 		'description' => 'Модуль осуществляющий поддержку соединения с базой данных',
 	);
-
 
 	// Settings
 	// --------
@@ -33,31 +27,31 @@ class DB extends \Module {
 	// Auto connect
 	// ------------
 	public static function initComponent() {
-		static::connect(array('db' => __SITE_ID__));
-	}
 
-	// Подключние к источнику
-	// ---------------------
-	public static function connect($args = array()) {
+		$db = __SITE_ID__;
+		$user = @ \Core::$settings['dbUser'];
+		$password = @ \Core::$settings['dbPassword'];
 
-		// База должна быть передана
-		// -------------------------
-		if (empty($args['db'])) \Logs::log('Ошибка подключения к базе данных, не указано имя', 'error');
+		// If db isn't set, return
+		// -----------------------
+		if (empty($db)) {
+			\Logs::log('Ошибка подключения к базе данных, не указано имя', 'error');
+			return;
+		}
 
-		// Создаем соединение
-		// ------------------
+		// Create connection
+		// -----------------
 		DB::$driver = new MongoClient();
-		DB::$connection = DB::$driver -> selectDB($args['db']);
+		DB::$connection = DB::$driver->selectDB($db);
 
-		// Включение полнотекстового поиска
-		// --------------------------------
+		// Authenticate
+		// ------------
+		if (!empty($user) || !empty($password)) DB::$connection->authenticate($user, $password);
+
+		// Enable fulltext search
+		// ----------------------
 		DB::$connection->command(array("setParameter" => 1, "textSearchEnabled" => true));
 
-
-		// Если есть параметры подключения, используем их
-		// ----------------------------------------------
-		if (!empty($args['user']) || !empty($args['password'])) {
-			DB::$connection->authenticate($args['user'], $args['password']);
-		}
 	}
+
 }

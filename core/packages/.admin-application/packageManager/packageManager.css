@@ -17,21 +17,19 @@
 }
 
 .packages-manager .components-list .component.active {
-    background-image: linear-gradient(#0c86cd, #4a9ac8);
-    color: #ffffff;
+  background-image: linear-gradient(#0c86cd, #4a9ac8);
+  color: #ffffff;
 }
-
 
 .packages-manager .core-table .cell-id-description {
-	font-size: 11px;
-	text-align: left;
-	color: #777;
+  font-size: 11px;
+  text-align: left;
+  color: #777;
 }
-
 .packages-manager .core-table .delete-package .icon { width: 17px; height: 17px; background-image: url('{%BASE%}icon-trash.png');}
 .packages-manager .core-table .download-package .icon { width: 17px; height: 17px; background-image: url('{%BASE%}icon-download.png');}
 .packages-manager .core-table .install-package .icon { width: 17px; height: 17px; background-image: url('{%BASE%}icon-install.png');}
 
 .packages-manager .component-editor {
-	width: 80%;
+  width: 80%;
 }
