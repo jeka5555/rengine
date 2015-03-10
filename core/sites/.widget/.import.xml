@@ -1,8 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<loaderOptions>
-	<import>
-		<file>list.php</file>
-		<file>node.php</file>
-		<file>nodes-list.php</file>
-	</import>
-</loaderOptions>

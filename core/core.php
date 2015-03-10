@@ -1,82 +1,118 @@
 <?php
 
-class Core extends \Module {
+class Core extends \Component {
 
-	// Component
-	// ---------
-	public static $component = array('id' => 'core', 'title' => 'Ядро');
+	// Extensions
+	// ----------
+	public $application = null; // Application object
+	public $modules = array(); // Modules
 
-	// Core instance
-	// -------------
-	public static $coreInstance = null;
+	// Properties
+	// ----------
+	public $language = 'ru';
+	public $locale = 'ru_RU.UTF8';
+	public $encoding = 'UTF-8';
+	public $applicationClass = 'core.sites.WebApplication';
 
-	// Application instance
-	// --------------------
-	public $application = null;
+	// Core instance is here
+	// ---------------------
+	public static $instance;
+	public static $objects = array();
 
-	// Settings
-	// --------
-	public static $settings = array(
-		'language' => 'ru',
-		'locale' => 'ru_RU.UTF8',
-		'encoding' => 'UTF-8',
-		'applicationClass' => 'web-application',
-		'useTrash' => true
-	);
+		// Start core
+	// ----------
+	public function start($args = array()) {
 
-	// Refresh application state with new request data
-	// -----------------------------------------------
-	public function refresh() {
+		// Set system variables
+		// --------------------
+		session_set_cookie_params(0);
+		mb_internal_encoding($this->encoding);
+		setlocale(LC_TIME, $this->locale);
+
+		// Load core
+		// ---------
+		$this->load();
+
+		$eventsModule = \Core::getModule('events');
+
+		// Refresh
+		// -------
+		$eventsModule->send('coreStart');
 
 		// Get application class
 		// ---------------------
-		if(!empty(static::$settings['applicationClass'])) {
+		if(!empty($this->applicationClass)) {
 
-			$applicationClass = \Core::getComponent('application', static::$settings['applicationClass']);
+			$applicationClass = \Core::getComponent($this->applicationClass);
 
 			// If application class are exists, run it
 			// ---------------------------------------
 			if (!empty($applicationClass)) {
-
-				// Get application class
-				// ---------------------
 				$this->application = $applicationClass::getInstance();
-
-				// Run application with events
-				// ---------------------------
-				$this->application->runApplication();
-
+				$this->application->run();
 			}
 
 			// Or just error
 			// -------------
-			else {
-				die('Ошибка запуска.Класс приложения не указан');
+			else die('Critical error. Application class '.$this->applicationClass.' doesn\'t exisits.');
+		}
+
+		// Core is finished work
+		// ---------------------
+		$eventsModule->send('coreStop');
+
+		// Save unsaved objects
+		// --------------------
+		\Components::saveObjects();
+
+	}
+
+	// Save undaved objects
+	// --------------------
+	public function saveObjects() {
+		foreach(\Core::$objects as $object) {
+			if ($object->_isModified && !empty($object->_id)) {
+				$object->save();
 			}
 		}
 	}
 
-	// Register data
-	// -------------
-	public static function initComponent() {
 
-		// Session
-		// -------
-		session_set_cookie_params(0);
+	// Load objects
+	//  -----------
+	function load() {
 
-		// Set encoding
-		// ------------
-		mb_internal_encoding(static::$settings['encoding']);
-		setlocale(LC_TIME, static::$settings['locale']);
+		// Load system
+		// -----------
+		$this->loadConfig();
+		\Loader::importPackage('core');
 
-		// If core is initialized, break
-		// -----------------------------
-		if (@static::$component['initialized'] == true ) return;
+		// Load packages
+		// -------------
+		$this->loadPackages();
 
-		// Init component
-		// --------------
-		parent::initComponent();
-		$component = \Core::getModule('core');
+		// Load assets object
+		// ------------------
+		$this->loadAssets();
+	}
+
+	// Load system assets
+	// -------------------
+	function loadAssets() {
+
+		// Init connection to assets
+		// -------------------------
+		$collectionClass = \Core::getComponent('core.db.Collection');
+		$assetsCollection = $collectionClass::getInstance(array('id' => 'assets'));
+
+		// Find all assets
+		// ---------------
+		$objects = $assetsCollection->find();
+	}
+
+	// Load configuration file
+	// -----------------------
+	function loadConfig() {
 
 		// Check for config
 		// ----------------
@@ -91,8 +127,10 @@ class Core extends \Module {
 			$config = simplexml_load_file($configFile);
 			$config = json_decode(json_encode($config), true);
 
+			// Set properies to core instance
+			// ------------------------------
 			if (!empty($config['enableSuperAccess'])) $config['enableSuperAccess'] = filter_var($config['enableSuperAccess'], FILTER_VALIDATE_BOOLEAN);
-			static::$settings = array_merge(static::$settings, $config);
+			$this->setProperties($config);
 
 			// Main settings
 			// -------------
@@ -101,119 +139,80 @@ class Core extends \Module {
 
 			// Set property to install
 			// -----------------------
-			$component->properties['isInstalled'] = true;
+			$this->isInstalled = true;
 		}
 
 	}
 
-	// Запуск ядра
-	// ----------------------------------
-	public function start($args = array()) {
+	// Load packages
+	// -------------
+	function loadPackages()  {
 
-		$packagesClass = \Core::getClass('package');
-		$packages = $packagesClass::find(array('query' => array('enable' => true), 'sort' => array('order' => -1)));
+		// Packages
+		// --------
+		$collectionClass = \Core::getComponent('core.db.Collection');
+		$packagesCollection = $collectionClass::getInstance(array('id' => 'packages'));
 
-		// If config modules are empty
-		// ---------------------------
-		if (!empty($packages)) {
-			// Load each package
-			// -----------------
-			foreach($packages as $package) {
-				\Loader::importPackage($package->id);
-			}
+		// Get all active packages
+		$packages = $packagesCollection->find(array('enabled' => true));
 
-		}
-		// Init components
-		// ---------------
-		\Components::initComponents();
-		\Events::send('componentsInitialized');
+		// Load active packages
+		// --------------------
+		foreach($packages as $package) $package->load();
 
-		// Push messages to client
-		// ------------------------
-		if (@ static::$settings['underConstruction'] == true) {
-
-			// Get message module
-			// ------------------
-			$messagesModule = \Core::getModule('flash-messages');
-
-			// Add message text
-			// ----------------
-			$messageText = first_var(@ static::$settings['underConstructionMessage'], 'Сайт находится в разработке');
-
-			// Add message
-			// -----------
-			$messagesModule->add(array('pinned' => true,'type' => 'notification','text' => $messageText	));
-		}
-
-		// Compile resources
-		// -----------------
-		\Core::getModule('compiler')->compile();
-
-		// Refresh
-		// -------
-		\Events::send('coreStart');
-		$this->refresh();
-		\Events::send('coreStop');
+		// Parse XML
+		// ---------
+		$this->initXML();
 
 	}
 
+	// Get asset by id
+	// ---------------
+	public static function getAsset($id) {
+		return @ \Components::$assets[$id];
+	}
 
-	// Reload page
-	// -----------
-	public function actionReloadPage($args = array()) {
-		\Core::getApplication()->reloadPage($args['location']);
+	// Init objects from XML
+	// ---------------------
+	public function initXML() {
+
+		// Get parser
+		// ----------	
+		$xmlParserClass = \Core::getComponent('core.XMLParser');
+		$xmlParser= $xmlParserClass::getInstance();
+
+		// Parse all xml documents, loaded by Loader
+		// -----------------------------------------
+		$xmlFiles = \Loader::$files['xml'];
+		foreach($xmlFiles as $file) {
+			$xmlDocument = simplexml_load_file(__DR__.$file);
+			$xmlParser->parseElement($xmlDocument[0]);			
+		};
 	}
 
 
 	// Get component by type and ID
 	// ----------------------------
-	public static function getComponent($type = null, $id = null) {
-
-		// Get component by type
-		// ---------------------
-		if (!empty($id)) {
-			return @ \Components::$types[$type][$id];
-		}
-
-		// Or just get type
-		// ----------------
-		else return @ constant($type);
+	public static function getComponent($a, $b = null) {
+		if (!empty($b)) return @ \Components::$types[$a][$b];
+		return @ \Components::$components[$a];
 	}
-
 
 	// Get module by ID
 	// ----------------
 	public static function getModule($id = null) {
-		if (empty($id)) return null;
-		return @ \Modules::get($id);
-	}
-
-	// Get class
-	// ---------
-	public static function getClass($id = null) {
-		if (empty($id)) return null;
-		return @ \Components::$types['class'][$id];
+		return @ \Core::$instance->modules[$id];
 	}
 
 	// Get core instance
 	// -----------------
 	public static function getInstance($args = array()) {
-		if (empty(static::$coreInstance)) static::$coreInstance = parent::getInstance();
-		return static::$coreInstance;
+		return static::$instance;
 	}
 
-	// Call named function with arguments
-	// ----------------------------------
-	public static function call($name, $args = null) {
-		return null;
+	// Consturtor
+	// ----------
+	function __construct() {
+		\Core::$instance = $this;
 	}
-
-
-	// Get current application
-	// -----------------------
-	public static function getApplication() {
-		$coreModule = \Core::getInstance();
-		return @ $coreModule->application;
-	}
-
 }

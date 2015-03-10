@@ -1,22 +1,22 @@
 <?php
 
-class Events extends \Module {
+namespace Core\Modules;
 
-	public static $component = array('id' => 'events', 'title' => 'События');
+class Events extends \Core\Module
+{
 
 	// Events storage
 	// --------------
-	public static $events = array();
+	public $events = array();
 
 	// Events listeners
 	// -----------------
-	public static $listeners = array(
-		'*' => array()
-	);
+	public $listeners = array('*' => array());
 
 	// Add listener
 	// ------------
-	public static function addListener($event, $listener) {
+	public function addListener($event, $listener)
+	{
 
 		// All events
 		// ----------
@@ -32,32 +32,29 @@ class Events extends \Module {
 
 			// Create event
 			// ------------
-			if (!isset(static::$listeners[$subevent]) || !is_array(static::$listeners[$subevent])) {
-				static::$listeners[$subevent] = array();
+			if (!isset($this->listeners[$subevent]) || !is_array($this->listeners[$subevent])) {
+				$this->listeners[$subevent] = array();
 			}
 
 			// Add listener
 			// ------------
-			static::$listeners[$subevent][] = $listener;
+			$this->listeners[$subevent][] = $listener;
 
 		}
-
 
 	}
 
 	// Send event
 	// ----------
-	public static function send($type, $data = null, $options = null) {
+	public function send($type, $data = null, $options = null)
+	{
 
-		// Store event locally
-		// -------------------
-		$module = \Core::getModule('events');
-		$module->events[] = array('type' => $type, 'data' => $data);
+		$this->events[] = array('type' => $type, 'data' => $data);
 
 		// All listeners
 		// -------------
-		if (!empty(static::$listeners['*'])) {
-			foreach(static::$listeners['*'] as $listener) {
+		if (!empty($this->listeners['*'])) {
+			foreach ($this->listeners['*'] as $listener) {
 
 				// If method, or closure
 				// ---------------------
@@ -75,8 +72,8 @@ class Events extends \Module {
 
 		// This event listener
 		// -------------------
-		if (!empty(static::$listeners[$type])) {
-			foreach(static::$listeners[$type] as $listener) {
+		if (!empty($this->listeners[$type])) {
+			foreach ($this->listeners[$type] as $listener) {
 
 				// If method, or closure
 				// ---------------------
@@ -96,7 +93,7 @@ class Events extends \Module {
 		// To client
 		// ---------
 		if (@ $options['client'] === true) {
-			\Events::send('clientEvent', array('type' => $type, 'data' => $data));
+			$this->send('clientEvent', array('type' => $type, 'data' => $data));
 		}
 
 	}

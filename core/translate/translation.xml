@@ -1,8 +1,0 @@
-<?xml version="1.0"?>
-<translation.TranslationTable id="core">
-
-	<direction lang="ru">
-		<entry id="hello-new-user"></entry>
-	</direction>
-
-</translation.TranslationTable>

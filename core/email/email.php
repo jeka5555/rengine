@@ -1,46 +1,25 @@
 <?php
 
-class Email extends Module {
+namespace Core\Modules;
 
-	// Инициализация компонента
-	// ------------------------
+class Email extends \Core\Module
+{
+
+	// Component
+	// ---------
 	static $component = array(
 		'id' => 'email',
 		'title' => 'Отправка почтовых сообщений',
-
-		// Module settings
-		// ---------------
 		'hasSettings' => true,
 	);
 
-
-	// Settings format
-	// ---------------
-	public static $componentSettingsFormat = array(
-		'server' => array('type' => 'text', 'title' => 'Адрес почтового сервера'),
-		'port' => array('type' => 'number', 'title' => 'Номер порта сервера', 'value' => 25),
-		'useCrypto' => array('type' => 'boolean', 'title' => 'Использовать защиту', 'value' => false ),
-		'user' => array('type' => 'text', 'title' => 'Имя пользователя'),
-		'pass' => array('type' => 'text', 'title' => 'Пароль пользователя', 'isPassword' => true)
-	);
-
-	// Settings
-	// --------
-	public static $settings = array(
-		'server' => 'smtp.yandex.ru',
-		'port' => 25,
-		'crypto' => false,
-		'user' => '',
-		'pass' => ''
-	);
-
-	// Настройки модуля
-	// ----------------
-	public $server;
-	public $port;
-	public $crypto;
-	public $user;
-	public $pass;
+	// Properties
+	// ----------
+	public $server = 'smpt.yandex.ru';
+	public $port = 25;
+	public $crypto = false;
+	public $user = '';
+	public $pass = '';
 	public $log;
 
 	public $timeout = '45';
@@ -49,28 +28,33 @@ class Email extends Module {
 	public $conn;
 
 	/**
-	 * Соединяемся с сервером
+	 * Connect with a server
 	 */
 	private function connect() {
 
+		// Generalize symbols
+		// ------------------
 		$this->crypto = strtolower(trim($this->crypto));
 		$this->server = strtolower(trim($this->server));
 
-		if($this->crypto == 'ssl')
-			$this->server = 'ssl://' . $this->server;
-		$this->conn = fsockopen(
-			$this->server, $this->port, $errno, $errstr, $this->timeout
-		);
+		// Connection
+		// ---------
+		if ($this->crypto == 'ssl') $this->server = 'ssl://' . $this->server;
+		$this->conn = fsockopen($this->server, $this->port, $errno, $errstr, $this->timeout);
 		$this->log .= fgets($this->conn);
 		return;
 	}
 
 	/**
-	 * Авторизация.
+	 * Authenticate
 	 */
 	private function  auth() {
+
 		fputs($this->conn, 'HELO ' . $this->localhost . $this->nl);
 		$this->log .= fgets($this->conn);
+
+		// Crypto
+		// ------
 		if($this->crypto == 'tls') {
 			fputs($this->conn, 'STARTTLS' . $this->nl);
 			$this->log .= fgets($this->conn);
@@ -80,6 +64,9 @@ class Email extends Module {
 			fputs($this->conn, 'HELO ' . $this->localhost . $this->nl);
 			$this->log .= fgets($this->conn);
 		}
+
+		// Authenticate for not localhost
+		// ------------------------------
 		if($this->server != 'localhost') {
 			fputs($this->conn, 'AUTH LOGIN' . $this->nl);
 			$this->log .= fgets($this->conn);
@@ -159,8 +146,8 @@ class Email extends Module {
 		}
 
 
-	// Выход и отсоединение.
-	// ----------------------------------------------
+	// Disconnect
+	// ----------
 	function destruct() {
 		fputs($this->conn, 'QUIT' . $this->nl);
 		fgets($this->conn);

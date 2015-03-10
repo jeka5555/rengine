@@ -1,6 +1,0 @@
-
-
-body.default-rengine {
-    background: url("{%BASE%}../img/logo.png") no-repeat scroll 50% 50%, url("{%BASE%}../img/top-bg.jpg") no-repeat scroll 50% 0 / 100% auto #050505;
-    height: inherit;
-}

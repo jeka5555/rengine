@@ -1,8 +1,0 @@
-<?xml version="1.0"?>
-<twig.Template id="banner" title="Banner template">
-	<template>
-		<a class="banner" href="{{href}}">
-			<img src="{{src}}"/>
-		</a>
-	</template>
-</twig.Template>
